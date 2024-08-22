@@ -31,12 +31,12 @@ const calcularEdad = (fechaNacimiento) => {
 
 // Función para obtener los datos del formulario
 const getFormData = () => {
-  const formData = {};
-  document.querySelectorAll('.form-field input').forEach(input => {
-    formData[input.name] = input.value;
-  });
-  return formData;
-};
+    const formData = {};
+    document.querySelectorAll('.form-field input, .form-field select').forEach(input => {
+      formData[input.name] = input.value;
+    });
+    return formData;
+  };
 
 // Función para limpiar el formulario
 const limpiarFormulario = () => {
@@ -45,109 +45,134 @@ const limpiarFormulario = () => {
   });
 };
 
-// Función para buscar un paciente
+
 // Función para buscar un paciente
 async function buscarPaciente() {
     const numeroDocumento = prompt("Ingrese el número de documento del paciente:");
     if (!numeroDocumento) {
-      alert("Debe ingresar un número de documento.");
+        alert("Debe ingresar un número de documento.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${apiUrl}/${numeroDocumento}`, {
+            method: "GET",
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Datos recibidos del backend:", data);
+
+            Object.entries(data).forEach(([key, value]) => {
+                const field = document.querySelector(`[name="${key}"]`);
+                if (field) {
+                    if (field.type === "checkbox") {
+                        field.checked = value === 1;
+                    } else if (field.type === "date") {
+                        field.value = formatDate(value);
+                    } else {
+                        field.value = value;
+                    }
+                }
+            });
+
+            // Asignar la descripción del tipo de documento al campo de salida
+            const tipoDocumentoField = document.querySelector('[name="tipo_documento"]');
+            if (tipoDocumentoField) {
+                tipoDocumentoField.value = data.tipo_documento_descripcion || "";
+            }
+
+            // Seleccionar el motivo de consulta en el select
+            const motivoConsultaField = document.querySelector('[name="motivo_consulta"]');
+            if (motivoConsultaField) {
+                motivoConsultaField.value = data.motivo_consulta || "";
+            }
+
+            // Calcular y mostrar la edad
+            if (data.fecha_nacimiento) {
+                const { anios, meses } = calcularEdad(data.fecha_nacimiento);
+                document.getElementById("ageYears").value = anios;
+                document.getElementById("ageMonths").value = meses;
+            }
+
+            alert("Paciente encontrado.");
+        } else {
+            alert("Paciente no encontrado.");
+        }
+    } catch (error) {
+        console.error("Error al buscar el paciente", error);
+        alert("Error al buscar el paciente.");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("buscar-btn").addEventListener("click", buscarPaciente);
+});
+
+// Función para crear un nuevo paciente
+async function crearPaciente() {
+    const data = getFormData();
+  
+    // Verificar y convertir el valor del motivo de consulta a entero
+    if (data.motivo_consulta) {
+      data.motivo_consulta = parseInt(data.motivo_consulta, 10);
+    }
+  
+    // Validar datos requeridos
+    if (!data.documento || !data.tipo_documento || !data.primer_nombre || !data.primer_apellido) {
+      alert("Debe completar todos los campos requeridos.");
       return;
     }
   
     try {
-      const response = await fetch(`${apiUrl}/${numeroDocumento}`, {
-        method: "GET",
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
       });
   
       if (response.ok) {
-        const data = await response.json();
-        console.log("Datos recibidos del backend:", data); // Depuración: muestra los datos del backend
-  
-        Object.entries(data).forEach(([key, value]) => {
-          const field = document.querySelector(`[name="${key}"]`);
-          if (field) {
-            if (field.type === "checkbox") {
-              field.checked = value === 1;
-            } else if (field.type === "date") {
-              field.value = formatDate(value); // Formatea la fecha antes de asignar
-            } else {
-              field.value = value;
-            }
-          }
-        });
-  
-        // Asignar la descripción del tipo de documento al campo de salida
-        const tipoDocumentoField = document.querySelector('[name="tipo_documento"]');
-        if (tipoDocumentoField) {
-          tipoDocumentoField.value = data.tipo_documento_descripcion || ""; // Usar la descripción en lugar del ID
-        }
-  
-        // Calcular y mostrar la edad
-        if (data.fecha_nacimiento) {
-          const { anios, meses } = calcularEdad(data.fecha_nacimiento);
-          document.getElementById("ageYears").value = anios;
-          document.getElementById("ageMonths").value = meses;
-        }
-  
-        alert("Paciente encontrado.");
+        const result = await response.json();
+        alert(`Paciente creado exitosamente con ID: ${result.id}`);
+        limpiarFormulario();
       } else {
-        alert("Paciente no encontrado.");
+        const errorData = await response.json();
+        console.error("Error al crear el paciente:", errorData.error);
+        alert("Error al crear el paciente.");
       }
     } catch (error) {
-      console.error("Error al buscar el paciente", error);
-      alert("Error al buscar el paciente.");
-    }
-  }
-  
-  document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("buscar-btn").addEventListener("click", buscarPaciente);
-  });
-
-// Función para crear un nuevo paciente
-async function crearPaciente() {
-  const data = getFormData();
-
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (response.ok) {
-      alert("Paciente creado exitosamente.");
-      limpiarFormulario();
-    } else {
+      console.error("Error al crear el paciente", error);
       alert("Error al crear el paciente.");
     }
-  } catch (error) {
-    console.error("Error al crear el paciente", error);
-    alert("Error al crear el paciente.");
   }
-}
 
 // Función para actualizar un paciente existente
 async function actualizarPaciente() {
-  const numeroDocumento = document.querySelector('[name="documento"]').value;
-  const data = getFormData();
-
-  try {
-    const response = await fetch(`${apiUrl}/${numeroDocumento}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (response.ok) {
-      alert("Paciente actualizado exitosamente.");
-    } else {
+    const numeroDocumento = document.querySelector('[name="documento"]').value;
+    const data = getFormData();
+  
+    // Verificar y convertir el valor del motivo de consulta
+    if (data.motivo_consulta) {
+      data.motivo_consulta = parseInt(data.motivo_consulta);
+    }
+  
+    try {
+      const response = await fetch(`${apiUrl}/${numeroDocumento}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+  
+      if (response.ok) {
+        alert("Paciente actualizado exitosamente.");
+      } else {
+        alert("Error al actualizar el paciente.");
+      }
+    } catch (error) {
+      console.error("Error al actualizar el paciente", error);
       alert("Error al actualizar el paciente.");
     }
-  } catch (error) {
-    console.error("Error al actualizar el paciente", error);
-    alert("Error al actualizar el paciente.");
   }
-}
 
 // Función para eliminar un paciente
 async function eliminarPaciente() {
