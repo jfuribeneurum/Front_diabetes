@@ -69,18 +69,49 @@
             <fieldset>
                 <legend>Motivo de consulta</legend>
                 <div>
-                  <div class="form-field insulina-label">
-                    <label for="motivo_consulta">Motivo de consulta</label>
-                    <select id="motivo_consulta" name="motivo_consulta" class="form-field">
-                      <option value="">Seleccione...</option>
-                      <option value="1">Ingreso</option>
-                      <option value="2">Control</option>
-                      <option value="3">Consulta no programada</option>
-                    </select>
-                  </div>
+                    <div class="form-field insulina-label">
+                        <label for="motivo_consulta">Motivo de consulta</label>
+                        <select id="motivo_consulta" name="motivo_consulta" class="form-field">
+                            <option value="">Seleccione...</option>
+                            <option value="1">Ingreso</option>
+                            <option value="2">Control</option>
+                            <option value="3">Consulta no programada</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Datos patológicos</legend>
+              
+                <div class="form-field">
+                  <label for="diagnosisDate">Fecha diagnóstico:</label>
+                  <input type="date" id="fecha_diagnostico" name="fecha_diagnostico" required>
+                </div>
+              
+                <div class="form-field">
+                  <label for="tipo_diabetes">Tipo de diabetes:</label>
+                  <select id="tipo_diabetes" name="tipo_diabetes">
+                    <option value="">Seleccione...</option>
+                    <option value="1">Ninguno</option>
+                    <option value="2">Tipo 1</option>
+                    <option value="3">Tipo 2</option>
+                    <option value="4">Gestacional</option>
+                    <option value="5">Pregestacional 1</option>
+                    <option value="6">Pregestacional 2</option>
+                    <option value="7">Otro</option>
+                  </select>
+                  <input type="text" id="observacion" name="observacion" placeholder="¿Cuál?" class="hidden">
+                  <table>
+                    <tr>
+                      <td><label for="patientDebut">Debut:</label></td>
+                      <td><textarea id="debut" name="debut" rows="4" required></textarea></td>
+                    </tr>
+                  </table>
                 </div>
               </fieldset>
               
+
 
             <div class="form-field">
                 <button type="button" id="buscar-btn">Buscar</button>
