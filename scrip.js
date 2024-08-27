@@ -211,32 +211,58 @@ async function actualizarPaciente() {
     const numeroDocumento = document.querySelector('[name="documento"]').value;
     const data = getFormData();
 
-    console.log('Datos a enviar para actualización:', data); // Agregar este log
+    console.log('Datos a enviar para actualización:', data); // Log para depuración
 
     // Verificar y convertir el valor del motivo de consulta
     if (data.motivo_consulta) {
-      data.motivo_consulta = parseInt(data.motivo_consulta, 10);
+        data.motivo_consulta = parseInt(data.motivo_consulta, 10);
+    }
+
+    // Ajustar el tipo de diabetes en función de la descripción seleccionada
+    const tipoDiabetesField = document.querySelector('[name="tipo_diabetes"]');
+    if (tipoDiabetesField) {
+        const tipoDiabetesValue = tipoDiabetesField.value;
+
+        const opciones = tipoDiabetesField.options;
+        for (let i = 0; i < opciones.length; i++) {
+            if (opciones[i].value === tipoDiabetesValue) {
+                data.tipo_diabetes = opciones[i].text;
+                break;
+            }
+        }
+    }
+
+    // Verificar y ajustar el campo de observación según el tipo de diabetes seleccionado
+    const observacionField = document.querySelector('[name="observacion"]');
+    if (tipoDiabetesField && observacionField) {
+        if (tipoDiabetesField.value === "7") { // Valor numérico para 'Otro'
+            data.observacion = observacionField.value;
+        } else {
+            data.observacion = ""; // Limpiar el valor si no es necesario
+        }
     }
 
     try {
-      const response = await fetch(`${apiUrl}/${numeroDocumento}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+        const response = await fetch(`${apiUrl}/${numeroDocumento}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
 
-      if (response.ok) {
-        alert("Paciente actualizado exitosamente.");
-      } else {
-        const errorData = await response.json();
-        console.error('Error al actualizar el paciente:', errorData.error);
-        alert("Error al actualizar el paciente: " + errorData.error);
-      }
+        if (response.ok) {
+            alert("Paciente actualizado exitosamente.");
+        } else {
+            const errorData = await response.json();
+            console.error('Error al actualizar el paciente:', errorData.error);
+            alert("Error al actualizar el paciente: " + errorData.error);
+        }
     } catch (error) {
-      console.error("Error al actualizar el paciente", error);
-      alert("Error al actualizar el paciente.");
+        console.error("Error al actualizar el paciente", error);
+        alert("Error al actualizar el paciente.");
     }
 }
+
+
 
 
 // Función para eliminar un paciente

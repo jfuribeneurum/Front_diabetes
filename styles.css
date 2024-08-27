@@ -125,3 +125,12 @@ button[type="button"]:hover {
 .hidden {
     display: none;
 }
+
+.sombreado {
+    background-color: #7d2d86;
+    color: white;
+    border-radius: 5px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    width: 390px;
+}
