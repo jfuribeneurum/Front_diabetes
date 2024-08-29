@@ -212,10 +212,12 @@ async function actualizarPaciente() {
     const numeroDocumento = document.querySelector('[name="documento"]').value;
     const data = getFormData();
 
+    // Convertir el valor de motivo_consulta a un número entero si existe
     if (data.motivo_consulta) {
         data.motivo_consulta = parseInt(data.motivo_consulta, 10);
     }
 
+    // Manejo del campo tipo_diabetes
     const tipoDiabetesField = document.querySelector('[name="tipo_diabetes"]');
     if (tipoDiabetesField) {
         const tipoDiabetesValue = tipoDiabetesField.value;
@@ -228,6 +230,7 @@ async function actualizarPaciente() {
         }
     }
 
+    // Manejo del campo observacion
     const observacionField = document.querySelector('[name="observacion"]');
     if (tipoDiabetesField && observacionField) {
         if (tipoDiabetesField.value === "7") {
@@ -236,6 +239,30 @@ async function actualizarPaciente() {
             data.observacion = "";
         }
     }
+
+    // Manejo de la sección de retinopatía diabética
+    const retinopathyDiagnosisField = document.querySelector('#retinopathyDiagnosis');
+    if (retinopathyDiagnosisField) {
+        data.dx_retinopatia = retinopathyDiagnosisField.value;
+    }
+
+    const edemaMacularField = document.querySelector('#edemaMacular');
+    if (edemaMacularField) {
+        data.edema_macular = edemaMacularField.value;
+    }
+
+    const consultationDateField = document.querySelector('#consultationDate');
+    if (consultationDateField) {
+        data.fecha_consulta = consultationDateField.value;
+    }
+
+    const lastEyeExamDateField = document.querySelector('#lastEyeExamDate');
+    if (lastEyeExamDateField) {
+        data.fecha_ultima_evaluacion = lastEyeExamDateField.value;
+    }
+
+    // Manejo del campo tiene_evaluacion_oftalmologica
+    data.tiene_evaluacion_oftalmologica = document.querySelector('#diabeticRetinopathy').value;
 
     try {
         const response = await fetch(`${apiUrl}/${numeroDocumento}`, {
@@ -256,6 +283,7 @@ async function actualizarPaciente() {
         alert("Error al actualizar el paciente.");
     }
 }
+
 
 // Función para eliminar un paciente
 async function eliminarPaciente() {
