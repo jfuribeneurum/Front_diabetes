@@ -155,6 +155,53 @@ async function buscarPaciente() {
             // Mostrar u ocultar la sección de retinopatía
             toggleRetinopathySection();
 
+
+
+            //datos nefropatia
+            // Datos de nefropatía
+
+            document.querySelector('#diabeticNephropathy').value = data.tiene_nefropatia || "";
+
+            const transplantField = document.querySelector('#transplant');
+            if (transplantField) {
+                transplantField.value = data.trasplante || "";
+            }
+
+            const creatinineField = document.querySelector('#creatinine');
+            if (creatinineField) {
+                creatinineField.value = data.creatinina || "";
+            }
+
+            const tfgField = document.querySelector('#tfg');
+            if (tfgField) {
+                tfgField.value = data.tfg || "";
+            }
+
+            const albuminuriaField = document.querySelector('#albuminuria');
+            if (albuminuriaField) {
+                albuminuriaField.value = data.albuminuria || "";
+            }
+
+            const classificationField = document.querySelector('#classification');
+            if (classificationField) {
+                classificationField.value = data.clasificacion|| "";
+            }
+
+            const trrField = document.querySelector('#trr');
+            if (trrField) {
+                const opciones = trrField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.toLowerCase() === data.trr.toLowerCase()) {
+                        trrField.value = opciones[i].value;
+                        break;
+                    }
+                }
+           }
+
+
+
+            
+
             // Calcular y mostrar la edad
             if (data.fecha_nacimiento) {
                 const { anios, meses } = calcularEdad(data.fecha_nacimiento);
@@ -240,7 +287,7 @@ async function actualizarPaciente() {
         }
     }
 
-    // Manejo de la sección de retinopatía diabética
+    // Manejo de la sección evaluacion_oftalmologica_retinopatia
     const retinopathyDiagnosisField = document.querySelector('#retinopathyDiagnosis');
     if (retinopathyDiagnosisField) {
         data.dx_retinopatia = retinopathyDiagnosisField.value;
@@ -261,8 +308,47 @@ async function actualizarPaciente() {
         data.fecha_ultima_evaluacion = lastEyeExamDateField.value;
     }
 
-    // Manejo del campo tiene_evaluacion_oftalmologica
+    // Manejo del campo tiene_evaluacion_oftalmologica_retinopatia
     data.tiene_evaluacion_oftalmologica = document.querySelector('#diabeticRetinopathy').value;
+
+    // Manejo de los datos de nefropatía
+    data.tiene_nefropatia = document.querySelector('#diabeticNephropathy').value || "";
+
+    const transplantField = document.querySelector('#transplant');
+    if (transplantField) {
+        data.trasplante = transplantField.value || "";
+    }
+
+    const creatinineField = document.querySelector('#creatinine');
+    if (creatinineField) {
+        data.creatinina = creatinineField.value || "";
+    }
+
+    const tfgField = document.querySelector('#tfg');
+    if (tfgField) {
+        data.tfg = tfgField.value || "";
+    }
+
+    const albuminuriaField = document.querySelector('#albuminuria');
+    if (albuminuriaField) {
+        data.albuminuria = albuminuriaField.value || "";
+    }
+
+    const classificationField = document.querySelector('#classification');
+    if (classificationField) {
+        data.clasificacion = classificationField.value || "";
+    }
+
+    //const trrField = document.querySelector('#trr');
+    //if (trrField) {
+        //const opciones = trrField.options;
+        //for (let i = 0; i < opciones.length; i++) {
+            //if (opciones[i].text.toLowerCase() === data.trr.toLowerCase()) {
+               // data.trr = opciones[i].value;
+                //break;
+            //}
+       // }
+    //}
 
     try {
         const response = await fetch(`${apiUrl}/${numeroDocumento}`, {
@@ -283,6 +369,7 @@ async function actualizarPaciente() {
         alert("Error al actualizar el paciente.");
     }
 }
+
 
 
 // Función para eliminar un paciente

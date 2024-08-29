@@ -165,9 +165,59 @@
                         <option value="no">No</option>
                     </select>
                 </div>
+
+                <!-- Sección Nefropatía diabética -->
+            <div id="nephropathySection" >
+                <h2>Nefropatía diabética</h2>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>TRR</th>
+                            <th>Trasplante</th>
+                            <th>Creatinina</th>
+                            <th>TFG</th>
+                            <th>Albuminuria</th>
+                            <th>Clasificación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="form-field">
+                                <select id="trr" name="trr">
+                                    <option value="">Seleccione una opción...</option>
+                                    <option value="1">Hemodiálisis</option>
+                                    <option value="2">Peritoneal</option>
+                                    <option value="3">No</option>
+                                </select>
+                            </td>
+                            <td class="form-field">
+                                <select id="transplant" name="transplant">
+                                    <option value="">Seleccione una opción...</option>
+                                    <option value="si">Sí</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="form-field">
+                                <input type="number" id="creatinine" name="creatinine" min="0" max="1000"
+                                    step="0.01" required>
+                            </td>
+                            <td class="form-field">
+                                <input type="number" id="tfg" name="tfg" min="0" max="1000" step="0.01" required>
+                            </td>
+                            <td class="form-field">
+                                <input type="number" id="albuminuria" name="albuminuria" min="0" max="1000"
+                                    step="0.01" required>
+                            </td>
+                            <td class="form-field">
+                                <input type="text" id="classification" name="classification" required>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             </fieldset>
 
-
+            
 
             <div class="form-field">
                 <button type="button" id="buscar-btn">Buscar</button>
