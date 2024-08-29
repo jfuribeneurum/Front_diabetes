@@ -2,50 +2,52 @@ const apiUrl = "http://localhost:3000/tblpaciente";
 
 // Función para formatear la fecha en el formato YYYY-MM-DD
 const formatDate = (dateStr) => {
-  if (!dateStr) return ""; // Manejo de valores vacíos
-  const date = new Date(dateStr);
-  return date.toISOString().split("T")[0];
+    if (!dateStr) return ""; // Manejo de valores vacíos
+    const date = new Date(dateStr);
+    return date.toISOString().split("T")[0];
 };
 
 // Función para calcular la edad en años y meses
 const calcularEdad = (fechaNacimiento) => {
-  const fechaActual = new Date();
-  const nacimiento = new Date(fechaNacimiento);
+    const fechaActual = new Date();
+    const nacimiento = new Date(fechaNacimiento);
 
-  let edadAnios = fechaActual.getFullYear() - nacimiento.getFullYear();
-  let edadMeses = fechaActual.getMonth() - nacimiento.getMonth();
+    let edadAnios = fechaActual.getFullYear() - nacimiento.getFullYear();
+    let edadMeses = fechaActual.getMonth() - nacimiento.getMonth();
 
-  // Ajustar la edad si el mes actual es antes del mes de nacimiento
-  if (edadMeses < 0) {
-    edadAnios--;
-    edadMeses += 12;
-  }
+    if (edadMeses < 0) {
+        edadAnios--;
+        edadMeses += 12;
+    }
 
-  // Ajustar la edad en meses si el día actual es antes del día de nacimiento
-  if (fechaActual.getDate() < nacimiento.getDate()) {
-    edadMeses--;
-  }
+    if (fechaActual.getDate() < nacimiento.getDate()) {
+        edadMeses--;
+    }
 
-  return { anios: edadAnios, meses: edadMeses };
+    return { anios: edadAnios, meses: edadMeses };
 };
 
 // Función para obtener los datos del formulario
 const getFormData = () => {
     const formData = {};
     document.querySelectorAll('.form-field input, .form-field select, .form-field textarea').forEach(input => {
-      if (input.name) {
-        formData[input.name] = input.value;
-      }
+        if (input.name) {
+            formData[input.name] = input.type === 'checkbox' ? (input.checked ? 'si' : 'no') : input.value;
+        }
     });
-    console.log('Datos del formulario:', formData); // Agregar este log
+    console.log('Datos del formulario:', formData);
     return formData;
 };
 
 // Función para limpiar el formulario
 const limpiarFormulario = () => {
-  document.querySelectorAll('.form-field input, .form-field select, .form-field textarea').forEach(input => {
-    input.value = '';
-  });
+    document.querySelectorAll('.form-field input, .form-field select, .form-field textarea').forEach(input => {
+        if (input.type === 'checkbox') {
+            input.checked = false;
+        } else {
+            input.value = '';
+        }
+    });
 };
 
 // Función para buscar un paciente
@@ -70,7 +72,7 @@ async function buscarPaciente() {
                 const field = document.querySelector(`[name="${key}"]`);
                 if (field) {
                     if (field.type === "checkbox") {
-                        field.checked = value === 1;
+                        field.checked = value === 'si';
                     } else if (field.type === "date") {
                         field.value = formatDate(value);
                     } else {
@@ -100,7 +102,6 @@ async function buscarPaciente() {
             // Obtener el campo del tipo de diabetes
             const tipoDiabetesField = document.querySelector('[name="tipo_diabetes"]');
             if (tipoDiabetesField) {
-                // Asignar el valor correcto basado en la descripción
                 const opciones = tipoDiabetesField.options;
                 for (let i = 0; i < opciones.length; i++) {
                     if (opciones[i].text === data.tipo_diabetes) {
@@ -108,7 +109,6 @@ async function buscarPaciente() {
                         break;
                     }
                 }
-                // Asegurarse de llamar a handleDiabetesTypeChange después de asignar el valor
                 handleDiabetesTypeChange();
             }
 
@@ -121,6 +121,39 @@ async function buscarPaciente() {
             if (observacionField) {
                 observacionField.value = data.observacion || "";
             }
+
+            // Datos de retinopatía
+            const consultationDateField = document.querySelector('#consultationDate');
+            if (consultationDateField) {
+                consultationDateField.value = formatDate(data.fecha_consulta);
+            }
+
+            const lastEyeExamDateField = document.querySelector('#lastEyeExamDate');
+            if (lastEyeExamDateField) {
+                lastEyeExamDateField.value = formatDate(data.fecha_ultima_evaluacion);
+            }
+
+            const retinopathyDiagnosisField = document.querySelector('[name="retinopathyDiagnosis"]');
+            if (retinopathyDiagnosisField) {
+                const opciones = retinopathyDiagnosisField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.toLowerCase() === data.dx_retinopatia.toLowerCase()) {
+                        retinopathyDiagnosisField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            }
+
+
+            const edemaMacularField = document.querySelector('#edemaMacular');
+            if (edemaMacularField) {
+                edemaMacularField.value = data.edema_macular || "";
+            }
+
+            document.querySelector('#diabeticRetinopathy').value = data.tiene_evaluacion_oftalmologica || "";
+
+            // Mostrar u ocultar la sección de retinopatía
+            toggleRetinopathySection();
 
             // Calcular y mostrar la edad
             if (data.fecha_nacimiento) {
@@ -139,70 +172,38 @@ async function buscarPaciente() {
     }
 }
 
-// Función para manejar la visibilidad del campo "observacion"
-const handleDiabetesTypeChange = () => {
-    const diabetesTypeField = document.getElementById("tipo_diabetes");
-    const observacionField = document.getElementById("observacion");
-
-    if (diabetesTypeField) {
-        // Verificar la visibilidad del campo "observacion" al cargar el valor inicial
-        if (diabetesTypeField.value === "7") { // Valor numérico para 'Otro'
-            observacionField.classList.remove("hidden");
-        } else {
-            observacionField.classList.add("hidden");
-            observacionField.value = ""; // Limpiar el valor si se oculta
-        }
-
-        // Manejar cambios en el select de tipo de diabetes
-        diabetesTypeField.addEventListener("change", function () {
-            if (this.value === "7") {
-                observacionField.classList.remove("hidden");
-            } else {
-                observacionField.classList.add("hidden");
-                observacionField.value = ""; // Limpiar el valor si se oculta
-            }
-        });
-    }
-};
-
-// Llama a la función cuando la página esté lista
-document.addEventListener("DOMContentLoaded", handleDiabetesTypeChange);
-
-
 // Función para crear un nuevo paciente
 async function crearPaciente() {
     const data = getFormData();
 
-    // Verificar y convertir el valor del motivo de consulta a entero
     if (data.motivo_consulta) {
-      data.motivo_consulta = parseInt(data.motivo_consulta, 10);
+        data.motivo_consulta = parseInt(data.motivo_consulta, 10);
     }
 
-    // Validar datos requeridos
     if (!data.documento || !data.tipo_documento || !data.primer_nombre || !data.primer_apellido) {
-      alert("Debe completar todos los campos requeridos.");
-      return;
+        alert("Debe completar todos los campos requeridos.");
+        return;
     }
 
     try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
 
-      if (response.ok) {
-        const result = await response.json();
-        alert(`Paciente creado exitosamente con ID: ${result.id}`);
-        limpiarFormulario();
-      } else {
-        const errorData = await response.json();
-        console.error("Error al crear el paciente:", errorData.error);
-        alert("Error al crear el paciente: " + errorData.error);
-      }
+        if (response.ok) {
+            const result = await response.json();
+            alert(`Paciente creado exitosamente con ID: ${result.id}`);
+            limpiarFormulario();
+        } else {
+            const errorData = await response.json();
+            console.error("Error al crear el paciente:", errorData.error);
+            alert("Error al crear el paciente: " + errorData.error);
+        }
     } catch (error) {
-      console.error("Error al crear el paciente", error);
-      alert("Error al crear el paciente.");
+        console.error("Error al crear el paciente", error);
+        alert("Error al crear el paciente.");
     }
 }
 
@@ -211,18 +212,13 @@ async function actualizarPaciente() {
     const numeroDocumento = document.querySelector('[name="documento"]').value;
     const data = getFormData();
 
-    console.log('Datos a enviar para actualización:', data); // Log para depuración
-
-    // Verificar y convertir el valor del motivo de consulta
     if (data.motivo_consulta) {
         data.motivo_consulta = parseInt(data.motivo_consulta, 10);
     }
 
-    // Ajustar el tipo de diabetes en función de la descripción seleccionada
     const tipoDiabetesField = document.querySelector('[name="tipo_diabetes"]');
     if (tipoDiabetesField) {
         const tipoDiabetesValue = tipoDiabetesField.value;
-
         const opciones = tipoDiabetesField.options;
         for (let i = 0; i < opciones.length; i++) {
             if (opciones[i].value === tipoDiabetesValue) {
@@ -232,13 +228,12 @@ async function actualizarPaciente() {
         }
     }
 
-    // Verificar y ajustar el campo de observación según el tipo de diabetes seleccionado
     const observacionField = document.querySelector('[name="observacion"]');
     if (tipoDiabetesField && observacionField) {
-        if (tipoDiabetesField.value === "7") { // Valor numérico para 'Otro'
+        if (tipoDiabetesField.value === "7") {
             data.observacion = observacionField.value;
         } else {
-            data.observacion = ""; // Limpiar el valor si no es necesario
+            data.observacion = "";
         }
     }
 
@@ -262,36 +257,70 @@ async function actualizarPaciente() {
     }
 }
 
-
-
-
 // Función para eliminar un paciente
 async function eliminarPaciente() {
-  const numeroDocumento = document.querySelector('[name="documento"]').value;
+    const numeroDocumento = document.querySelector('[name="documento"]').value;
 
-  if (!numeroDocumento) {
-    alert("Debe ingresar un número de documento para eliminar.");
-    return;
-  }
-
-  const confirmacion = confirm("¿Está seguro de que desea eliminar al paciente?");
-  if (!confirmacion) return;
-
-  try {
-    const response = await fetch(`${apiUrl}/${numeroDocumento}`, {
-      method: 'DELETE'
-    });
-
-    if (response.ok) {
-      alert("Paciente eliminado exitosamente.");
-      limpiarFormulario();
-    } else {
-      alert("Error al eliminar el paciente.");
+    if (!numeroDocumento) {
+        alert("Debe ingresar un número de documento para eliminar.");
+        return;
     }
-  } catch (error) {
-    console.error("Error al eliminar el paciente", error);
-    alert("Error al eliminar el paciente.");
-  }
+
+    const confirmacion = confirm("¿Está seguro de que desea eliminar al paciente?");
+    if (!confirmacion) return;
+
+    try {
+        const response = await fetch(`${apiUrl}/${numeroDocumento}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            alert("Paciente eliminado exitosamente.");
+            limpiarFormulario();
+        } else {
+            alert("Error al eliminar el paciente.");
+        }
+    } catch (error) {
+        console.error("Error al eliminar el paciente", error);
+        alert("Error al eliminar el paciente.");
+    }
+}
+
+// Función para manejar la visibilidad del campo "observacion"
+const handleDiabetesTypeChange = () => {
+    const diabetesTypeField = document.getElementById("tipo_diabetes");
+    const observacionField = document.getElementById("observacion");
+
+    if (diabetesTypeField) {
+        if (diabetesTypeField.value === "7") {
+            observacionField.classList.remove("hidden");
+        } else {
+            observacionField.classList.add("hidden");
+            observacionField.value = "";
+        }
+
+        diabetesTypeField.addEventListener("change", function () {
+            if (this.value === "7") {
+                observacionField.classList.remove("hidden");
+            } else {
+                observacionField.classList.add("hidden");
+                observacionField.value = "";
+            }
+        });
+    }
+};
+
+// Mostrar u ocultar la sección según el valor del <select> retinopatia
+function toggleRetinopathySection() {
+    const selectElement = document.querySelector('#diabeticRetinopathy');
+    const retinopathySection = document.querySelector('#retinopathySection');
+    if (selectElement && retinopathySection) {
+        if (selectElement.value === 'si') {
+            retinopathySection.classList.remove('hidden');
+        } else {
+            retinopathySection.classList.add('hidden');
+        }
+    }
 }
 
 // Inicialización de eventos cuando el DOM esté completamente cargado
@@ -301,8 +330,12 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("actualizar-btn").addEventListener("click", actualizarPaciente);
     document.getElementById("eliminar-btn").addEventListener("click", eliminarPaciente);
     document.getElementById("limpiar-btn").addEventListener("click", limpiarFormulario);
+
     handleDiabetesTypeChange(); // Manejo de la visibilidad del campo "observacion"
+
+    const eyeExamSelect = document.getElementById("diabeticRetinopathy");
+    if (eyeExamSelect) {
+        toggleRetinopathySection(); // Inicializar la visibilidad de la sección
+        eyeExamSelect.addEventListener('change', toggleRetinopathySection);
+    }
 });
-
-
-

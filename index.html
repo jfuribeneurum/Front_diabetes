@@ -115,13 +115,45 @@
                 <legend>Complicaciones y Factores de Riesgo</legend>
                 <h2 class="sombreado">Complicaciones microvasculares</h2>
                 <div class="form-field">
-                    <label for="diabeticRetinopathy">¿Tiene evaluacion oftalmológica?</label>
-                    <select id="diabeticRetinopathy"
-                        onchange="toggleSection('diabeticRetinopathy', 'retinopathySection')">
+                    <label for="diabeticRetinopathy">¿Tiene evaluación oftalmológica?</label>
+                    <select id="diabeticRetinopathy">
                         <option value="">Seleccione una opción...</option>
                         <option value="si">Sí</option>
                         <option value="no">No</option>
                     </select>
+                </div>
+
+                <!-- Sección Retinopatía diabética -->
+                <div id="retinopathySection" class="hidden">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha última Evaluación oftalmología</th>
+                                <th>Dx de Retinopatía</th>
+                                <th>Edema macular</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field"><input type="date" id="lastEyeExamDate" name="lastEyeExamDate" required></td>
+                                <td>
+                                    <select id="retinopathyDiagnosis" name="retinopathyDiagnosis">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Proliferativa</option>
+                                        <option value="2">No proliferativa</option>
+                                        <option value="3">Sin retinopatía</option>
+                                    </select>
+                                </td>
+                                <td class="form-field">
+                                    <select id="edemaMacular" name="edemaMacular">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="si">Sí</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </fieldset>
 
