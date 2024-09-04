@@ -400,67 +400,294 @@ async function buscarPaciente() {
 
 
             // Sección Pérdida de Sensibilidad
-const presentaSensibilidadField = document.querySelector('#sensitivityLoss');
-if (presentaSensibilidadField) {
-    presentaSensibilidadField.value = data.presenta_perdida_sensibilidad || "";
-} else {
-    console.error('Elemento con id "sensitivityLoss" no encontrado.');
-}
+            const presentaSensibilidadField = document.querySelector('#sensitivityLoss');
+            if (presentaSensibilidadField) {
+                presentaSensibilidadField.value = data.presenta_perdida_sensibilidad || "";
+            } else {
+                console.error('Elemento con id "sensitivityLoss" no encontrado.');
+            }
 
-const localizacionSensibilidadField = document.querySelector('#sensitivityLossLocation');
-if (localizacionSensibilidadField) {
-    const opciones = localizacionSensibilidadField.options;
-    for (let i = 0; i < opciones.length; i++) {
-        if (opciones[i].value === data.localizacion_perdida_sensibilidad) {
-            localizacionSensibilidadField.value = opciones[i].value;
-            break;
-        }
-    }
-} else {
-    console.error('Elemento con id "sensitivityLossLocation" no encontrado.');
-}
+            const localizacionSensibilidadField = document.querySelector('#sensitivityLossLocation');
+            if (localizacionSensibilidadField) {
+                const opciones = localizacionSensibilidadField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.toLowerCase() === data.localizacion_perdida_sensibilidad.toLowerCase()) {
+                        localizacionSensibilidadField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "sensitivityLossLocation" no encontrado.');
+            }
 
-const intensidadSensibilidadField = document.querySelector('#sensitivityLossIntensity');
-if (intensidadSensibilidadField) {
-    const opciones = intensidadSensibilidadField.options;
-    for (let i = 0; i < opciones.length; i++) {
-        if (opciones[i].value === data.intensidad_perdida_sensibilidad) {
-            intensidadSensibilidadField.value = opciones[i].value;
-            break;
-        }
-    }
-} else {
-    console.error('Elemento con id "sensitivityLossIntensity" no encontrado.');
-}
+            const intensidadSensibilidadField = document.querySelector('#sensitivityLossIntensity');
+            if (intensidadSensibilidadField) {
+                const opciones = intensidadSensibilidadField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].value === data.intensidad_perdida_sensibilidad) {
+                        intensidadSensibilidadField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "sensitivityLossIntensity" no encontrado.');
+            }
 
-const compromisoSensibilidadField = document.querySelector('#sensitivityLossLocationType');
-if (compromisoSensibilidadField) {
-    const opciones = compromisoSensibilidadField.options;
-    for (let i = 0; i < opciones.length; i++) {
-        if (opciones[i].text.toLowerCase() === data.compromiso_perdida_sensibilidad.toLowerCase()) {
-            compromisoSensibilidadField.value = opciones[i].value;
-            break;
-        }
-    }
-} else {
-    console.error('Elemento con id "sensitivityLossLocationType" no encontrado.');
-}
+            const compromisoSensibilidadField = document.querySelector('#sensitivityLossLocationType');
+            if (compromisoSensibilidadField) {
+                const opciones = compromisoSensibilidadField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.toLowerCase() === data.compromiso_perdida_sensibilidad.toLowerCase()) {
+                        compromisoSensibilidadField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "sensitivityLossLocationType" no encontrado.');
+            }
 
-const lateralidadSensibilidadField = document.querySelector('#sensitivityLossSymmetry');
-if (lateralidadSensibilidadField) {
-    const opciones = lateralidadSensibilidadField.options;
-    for (let i = 0; i < opciones.length; i++) {
-        if (opciones[i].value === data.lateralidad_perdida_sensibilidad) {
-            lateralidadSensibilidadField.value = opciones[i].value;
-            break;
-        }
-    }
-} else {
-    console.error('Elemento con id "sensitivityLossSymmetry" no encontrado.');
-}
+            const lateralidadSensibilidadField = document.querySelector('#sensitivityLossSymmetry');
+            if (lateralidadSensibilidadField) {
+                const opciones = lateralidadSensibilidadField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.toLowerCase() === data.lateralidad_perdida_sensibilidad.toLowerCase()) {
+                        lateralidadSensibilidadField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "sensitivityLossSymmetry" no encontrado.');
+            }
+
+
+            // Sección Calambres
+            const presentaCalambresField = document.querySelector('#calambres');
+            if (presentaCalambresField) {
+                presentaCalambresField.value = data.presenta_calambres || "";
+            } else {
+                console.error('Elemento con id "calambres" no encontrado.');
+            }
+
+            const localizacionCalambresField = document.querySelector('#calambresLocation');
+            if (localizacionCalambresField) {
+                const opciones = localizacionCalambresField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === data.localizacion_calambres.trim().toLowerCase()) {
+                        localizacionCalambresField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "calambresLocation" no encontrado.');
+            }
+
+            const intensidadCalambresField = document.querySelector('#calambresIntensity');
+            if (intensidadCalambresField) {
+                const opciones = intensidadCalambresField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].value === data.intensidad_calambres) {
+                        intensidadCalambresField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "calambresIntensity" no encontrado.');
+            }
+
+            const compromisoCalambresField = document.querySelector('#calambresLocationType');
+            if (compromisoCalambresField) {
+                const opciones = compromisoCalambresField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === data.compromiso_calambres.trim().toLowerCase()) {
+                        compromisoCalambresField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "calambresLocationType" no encontrado.');
+            }
+
+            const lateralidadCalambresField = document.querySelector('#calambresSymmetry');
+            if (lateralidadCalambresField) {
+                const opciones = lateralidadCalambresField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === data.lateralidad_calambres.trim().toLowerCase()) {
+                        lateralidadCalambresField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "calambresSymmetry" no encontrado.');
+            }
+
+
+            // Presenta Fasciculaciones
+            const presentaFasciculacionesField = document.querySelector('#fasciculaciones');
+            if (presentaFasciculacionesField) {
+                const valorRecibido = data.presenta_fasciculaciones ? data.presenta_fasciculaciones.trim().toLowerCase() : "";
+                console.log('Valor ajustado para presenta_fasciculaciones:', valorRecibido);
+
+                // Verificar si el valor es "si" o "no" y asignar
+                if (valorRecibido === "si" || valorRecibido === "no") {
+                    presentaFasciculacionesField.value = valorRecibido;
+                } else {
+                    console.error('El valor recibido no coincide con las opciones del select:', valorRecibido);
+                }
+            } else {
+                console.error('Elemento con id "fasciculaciones" no encontrado.');
+            }
+
+            // Localización Fasciculaciones
+            const localizacionFasciculacionesField = document.querySelector('#fasciculacionesLocation');
+            if (localizacionFasciculacionesField) {
+                const opciones = localizacionFasciculacionesField.options;
+                let found = false;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === data.localizacion_fasciculaciones.trim().toLowerCase()) {
+                        localizacionFasciculacionesField.value = opciones[i].value;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    console.error('Valor de localización de fasciculaciones no encontrado:', data.localizacion_fasciculaciones);
+                }
+            } else {
+                console.error('Elemento con id "fasciculacionesLocation" no encontrado.');
+            }
+
+            // Intensidad Fasciculaciones
+            const intensidadFasciculacionesField = document.querySelector('#fasciculacionesIntensity');
+            if (intensidadFasciculacionesField) {
+                const opciones = intensidadFasciculacionesField.options;
+                let found = false;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].value === data.intensidad_fasciculaciones) {
+                        intensidadFasciculacionesField.value = opciones[i].value;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    console.error('Valor de intensidad de fasciculaciones no encontrado:', data.intensidad_fasciculaciones);
+                }
+            } else {
+                console.error('Elemento con id "fasciculacionesIntensity" no encontrado.');
+            }
+
+            // Compromiso Fasciculaciones
+            const compromisoFasciculacionesField = document.querySelector('#fasciculacionesLocationType');
+            if (compromisoFasciculacionesField) {
+                const opciones = compromisoFasciculacionesField.options;
+                let found = false;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === data.compromiso_fasciculaciones.trim().toLowerCase()) {
+                        compromisoFasciculacionesField.value = opciones[i].value;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    console.error('Valor de compromiso de fasciculaciones no encontrado:', data.compromiso_fasciculaciones);
+                }
+            } else {
+                console.error('Elemento con id "fasciculacionesLocationType" no encontrado.');
+            }
+
+            // Lateralidad Fasciculaciones
+            const lateralidadFasciculacionesField = document.querySelector('#fasciculacionesSymmetry');
+            if (lateralidadFasciculacionesField) {
+                const opciones = lateralidadFasciculacionesField.options;
+                let found = false;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === data.lateralidad_fasciculaciones.trim().toLowerCase()) {
+                        lateralidadFasciculacionesField.value = opciones[i].value;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    console.error('Valor de lateralidad de fasciculaciones no encontrado:', data.lateralidad_fasciculaciones);
+                }
+            } else {
+                console.error('Elemento con id "fasciculacionesSymmetry" no encontrado.');
+            }
 
 
 
+            // Sección Disminución de la Fuerza
+            const presentaDisminucionFuerzaField = document.querySelector('#disminucionFuerza');
+            if (presentaDisminucionFuerzaField) {
+                presentaDisminucionFuerzaField.value = data.presenta_disminucion_fuerza || "";
+            } else {
+                console.error('Elemento con id "disminucionFuerza" no encontrado.');
+            }
+
+            const localizacionDisminucionFuerzaField = document.querySelector('#disminucionFuerzaLocation');
+            if (localizacionDisminucionFuerzaField) {
+                const opciones = localizacionDisminucionFuerzaField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === data.localizacion_disminucion_fuerza.trim().toLowerCase()) {
+                        localizacionDisminucionFuerzaField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "disminucionFuerzaLocation" no encontrado.');
+            }
+
+            const intensidadDisminucionFuerzaField = document.querySelector('#disminucionFuerzaIntensity');
+            if (intensidadDisminucionFuerzaField) {
+                const opciones = intensidadDisminucionFuerzaField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].value === data.intensidad_disminucion_fuerza) {
+                        intensidadDisminucionFuerzaField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "disminucionFuerzaIntensity" no encontrado.');
+            }
+
+            const compromisoDisminucionFuerzaField = document.querySelector('#disminucionFuerzaLocationType');
+            if (compromisoDisminucionFuerzaField) {
+                const opciones = compromisoDisminucionFuerzaField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === data.compromiso_disminucion_fuerza.trim().toLowerCase()) {
+                        compromisoDisminucionFuerzaField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "disminucionFuerzaLocationType" no encontrado.');
+            }
+
+            const lateralidadDisminucionFuerzaField = document.querySelector('#disminucionFuerzaSymmetry');
+            if (lateralidadDisminucionFuerzaField) {
+                const opciones = lateralidadDisminucionFuerzaField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === data.lateralidad_disminucion_fuerza.trim().toLowerCase()) {
+                        lateralidadDisminucionFuerzaField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "disminucionFuerzaSymmetry" no encontrado.');
+            }
+
+            // Sección Otras Neuropatías
+            const presentaOtrasNeuropatiasField = document.querySelector('#otherNeuropathies');
+            if (presentaOtrasNeuropatiasField) {
+                presentaOtrasNeuropatiasField.value = data.otras_neuropatias || "";
+            } else {
+                console.error('Elemento con id "otherNeuropathies" no encontrado.');
+            }
+
+            
+
+            
+
+            
 
 
             // Calcular y mostrar la edad
