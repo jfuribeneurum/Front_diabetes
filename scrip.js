@@ -683,7 +683,109 @@ async function buscarPaciente() {
                 console.error('Elemento con id "otherNeuropathies" no encontrado.');
             }
 
-            
+            const tiponeuropatiafield = document.querySelector('#neuropathyType');
+            if (tiponeuropatiafield) {
+                const opciones = tiponeuropatiafield.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === data.tipo_neuropatia.trim().toLowerCase()) {
+                        tiponeuropatiafield.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "tiponeuropatiafield" no encontrado.');
+            }
+
+
+            // Sección Pie Diabético
+const presentaPieDiabeticoField = document.querySelector('#piediabetico');
+if (presentaPieDiabeticoField) {
+    presentaPieDiabeticoField.value = data.piediabetico || "";
+} else {
+    console.error('Elemento con id "piediabetico" no encontrado.');
+}
+
+// Campo de antecedente de úlcera
+const antecedenteUlceraField = document.querySelector('#ulcerHistory');
+if (antecedenteUlceraField) {
+    antecedenteUlceraField.value = data.antecedente_ulcera || "";
+} else {
+    console.error('Elemento con id "ulcerHistory" no encontrado.');
+}
+
+// Campo de localización de úlcera
+const localizacionUlceraField = document.querySelector('#ulcerLocation');
+if (localizacionUlceraField) {
+    const opciones = localizacionUlceraField.options;
+    for (let i = 0; i < opciones.length; i++) {
+        if (opciones[i].text.trim().toLowerCase() === (data.localizacion_ulcera || "").trim().toLowerCase()) {
+            localizacionUlceraField.value = opciones[i].value;
+            break;
+        }
+    }
+} else {
+    console.error('Elemento con id "ulcerLocation" no encontrado.');
+}
+
+// Campo de antecedente de amputación
+const antecedenteAmputacionField = document.querySelector('#amputationHistory');
+if (antecedenteAmputacionField) {
+    antecedenteAmputacionField.value = data.antecedente_amputacion || "";
+} else {
+    console.error('Elemento con id "amputationHistory" no encontrado.');
+}
+
+// Campo de localización de amputación
+const localizacionAmputacionField = document.querySelector('#amputationLocation');
+if (localizacionAmputacionField) {
+    const opciones = localizacionAmputacionField.options;
+    for (let i = 0; i < opciones.length; i++) {
+        if (opciones[i].text.trim().toLowerCase() === (data.localizacion_amputacion || "").trim().toLowerCase()) {
+            localizacionAmputacionField.value = opciones[i].value;
+            break;
+        }
+    }
+} else {
+    console.error('Elemento con id "amputationLocation" no encontrado.');
+}
+
+
+// Sección Complicaciones Macrovasculares
+const presentaEnfermedadCoronariaField = document.querySelector('#coronaryDisease');
+if (presentaEnfermedadCoronariaField) {
+    presentaEnfermedadCoronariaField.value = data.enfermedad_coronaria || "";
+} else {
+    console.error('Elemento con id "coronaryDisease" no encontrado.');
+}
+
+const presentaInsuficienciaCardiacaField = document.querySelector('#heartFailure');
+if (presentaInsuficienciaCardiacaField) {
+    presentaInsuficienciaCardiacaField.value = data.insuficiencia_cardiaca || "";
+} else {
+    console.error('Elemento con id "heartFailure" no encontrado.');
+}
+
+const presentaEnfermedadNeurologicaField = document.querySelector('#neurologicalDisease');
+if (presentaEnfermedadNeurologicaField) {
+    presentaEnfermedadNeurologicaField.value = data.enfermedad_neurologica || "";
+} else {
+    console.error('Elemento con id "neurologicalDisease" no encontrado.');
+}
+
+const presentaFibrilacionAuricularField = document.querySelector('#atrialFibrillation');
+if (presentaFibrilacionAuricularField) {
+    presentaFibrilacionAuricularField.value = data.fibrilacion_auricular || "";
+} else {
+    console.error('Elemento con id "atrialFibrillation" no encontrado.');
+}
+
+const presentaEnfermedadVascularPerifericaField = document.querySelector('#peripheralVascularDisease');
+if (presentaEnfermedadVascularPerifericaField) {
+    presentaEnfermedadVascularPerifericaField.value = data.enfermedad_vascular_periferica || "";
+} else {
+    console.error('Elemento con id "peripheralVascularDisease" no encontrado.');
+}
+
 
             
 

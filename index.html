@@ -750,7 +750,7 @@
                 </div>
 
                 <!-- Campo de selección para "Tipo de neuropatía" -->
-                <div class="form-field" id="neuropathyType">
+                <div class="form-field"  >
                     <label for="neuropathyType">Tipo de neuropatía:</label>
                     <select id="neuropathyType" name="neuropathyType">
                         <option value="">Seleccione una opción...</option>
@@ -768,8 +768,8 @@
                
                 <!-- Pregunta para Pie diabético -->
                 <div class="form-field">
-                    <label for="diabeticFoot">¿pie diabético?</label>
-                    <select id="diabeticFoot" onchange="toggleSection('diabeticFoot', 'footSection')">
+                    <label for="piediabetico">¿pie diabético?</label>
+                    <select id="piediabetico">
                         <option value="">Seleccione una opción...</option>
                         <option value="si">Sí</option>
                         <option value="no">No</option>
@@ -777,46 +777,41 @@
                 </div>
 
                 <!-- Sección Pie diabético -->
-                <div id="footSection" style="display: none;">
+                <div id="footSection" >
                     <h2>Pie diabético</h2>
                     <table class="styled-table">
                         <thead>
                             <tr>
-                                <th>Fecha</th>
                                 <th>Antecedente de úlcera</th>
-                                <th id="ulcerLocationHeader" class="hidden">Localización</th>
+                                <th>Localización</th>
                                 <th>Antecedente de amputación</th>
-                                <th id="amputationLocationHeader" class="hidden">Localización</th>
+                                <th>Localización</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="form-field"><input type="date" id="footDate" name="footDate" required>
-                                </td>
-                                <td class="form-field">
-                                    <select id="ulcerHistory" name="ulcerHistory"
-                                        onchange="toggleLocationField('ulcerHistory', 'ulcerLocation')">
+                                <td>
+                                    <select id="ulcerHistory" name="ulcerHistory">
                                         <option value="">Seleccione una opción...</option>
                                         <option value="si">Sí</option>
                                         <option value="no">No</option>
                                     </select>
                                 </td>
-                                <td class="form-field hidden" id="ulcerLocationCell">
+                                <td>
                                     <select id="ulcerLocation" name="ulcerLocation">
                                         <option value="">Seleccione una opción...</option>
                                         <option value="1">Miembros superiores</option>
                                         <option value="2">Miembros inferiores</option>
                                     </select>
                                 </td>
-                                <td class="form-field">
-                                    <select id="amputationHistory" name="amputationHistory"
-                                        onchange="toggleLocationField('amputationHistory', 'amputationLocation')">
+                                <td>
+                                    <select id="amputationHistory" name="amputationHistory">
                                         <option value="">Seleccione una opción...</option>
                                         <option value="si">Sí</option>
                                         <option value="no">No</option>
                                     </select>
                                 </td>
-                                <td class="form-field hidden" id="amputationLocationCell">
+                                <td>
                                     <select id="amputationLocation" name="amputationLocation">
                                         <option value="">Seleccione una opción...</option>
                                         <option value="1">Miembros superiores</option>
@@ -826,7 +821,58 @@
                             </tr>
                         </tbody>
                     </table>
-                   
+                </div>
+
+                <h2 class="sombreado">Complicaciones macrovasculares</h2>
+
+                 <!-- Enfermedad Coronaria -->
+                 <div class="form-field">
+                    <label for="coronaryDisease">¿Enfermedad Coronaria?</label>
+                    <select id="coronaryDisease">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Insuficiencia Cardiaca -->
+                <div class="form-field">
+                    <label for="heartFailure">¿Sufre de Insuficiencia Cardiaca?</label>
+                    <select id="heartFailure">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                 <!-- Enfermedad Neurológica -->
+                 <div class="form-field">
+                    <label for="neurologicalDisease">¿Sufre de Enfermedad Neurológica?</label>
+                    <select id="neurologicalDisease">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Fibrilación Auricular -->
+                <div class="form-field">
+                    <label for="atrialFibrillation">¿Sufre de Fibrilación Auricular?</label>
+                    <select id="atrialFibrillation">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                 <!-- Enfermedad Vascular Periférica -->
+                 <div class="form-field">
+                    <label for="peripheralVascularDisease">¿Sufre de Enfermedad Vascular Periférica?</label>
+                    <select id="peripheralVascularDisease">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
                 </div>
             </fieldset>
 
