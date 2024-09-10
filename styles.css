@@ -108,6 +108,20 @@ legend {
     }
 }
 
+.form-field input,
+.form-field select {
+    padding: 6px; /* Ajustar padding */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 300px; /* Ancho máximo para evitar que se vean muy extendidos */
+    font-size: 13px; /* Tamaño de fuente intermedio */
+    margin: 3px 0; /* Ajustar margen */
+    
+}
+
+
 button[type="button"] {
     background-color: #7d2d86; /* Color corporativo */
     color: white; /* Color del texto */
@@ -133,4 +147,61 @@ button[type="button"]:hover {
     margin-top: 30px;
     margin-bottom: 50px;
     width: 390px;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px; /* Reducir margen superior */
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Reducir sombra */
+    font-size: 13px; /* Tamaño de fuente intermedio */
+}
+
+.styled-table thead {
+    background-color: #7d2d86;
+    color: white;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 6px 8px; /* Ajustar padding */
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+.styled-table select {
+    padding: 6px; /* Ajustar padding */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 13px; /* Tamaño de fuente intermedio */
+}
+
+.styled-table input[type="text"],
+.styled-table input[type="date"],
+.styled-table input[type="number"] {
+    width: 100%;
+    padding: 6px; /* Ajustar padding */
+    box-sizing: border-box;
+    font-size: 13px; /* Tamaño de fuente intermedio */
+}
+
+.styled-table .observacion-column input {
+    width: 100%;
+    padding: 6px; /* Ajustar padding */
+    box-sizing: border-box;
+    font-size: 13px; /* Tamaño de fuente intermedio */
 }

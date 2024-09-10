@@ -13,7 +13,7 @@
         <form id="diabetesForm">
             <div class="form-header">
                 <div class="form-header-left">
-                    <img src="assets/images/logo2.png" alt="Logo de la Empresa" class="logo" />
+                    <img src="/logo2.png" alt="Logo de la Empresa" class="logo" />
                 </div>
                 <div class="form-header-center">
                     <p>HISTORIA CLÍNICA NEURUM IPS</p>
@@ -27,6 +27,14 @@
 
             <fieldset>
                 <legend>Información del Paciente</legend>
+
+                <div class="form-field">
+                    <button type="button" id="buscar-btn">Buscar</button>
+                    <button type="button" id="crear-btn">Crear</button>
+                    <button type="button" id="actualizar-btn">Actualizar</button>
+                    <button type="button" id="eliminar-btn">Eliminar</button>
+                    <button type="reset" id="limpiar-btn">Limpiar</button>
+                </div>
 
                 <div class="form-field">
                     <label for="consultationDate">Fecha de la Consulta:</label>
@@ -69,7 +77,7 @@
             <fieldset>
                 <legend>Motivo de consulta</legend>
                 <div>
-                    <div class="form-field insulina-label">
+                    <div class="form-field">
                         <label for="motivo_consulta">Motivo de consulta</label>
                         <select id="motivo_consulta" name="motivo_consulta" class="form-field">
                             <option value="">Seleccione...</option>
@@ -874,6 +882,146 @@
                         <option value="no">No</option>
                     </select>
                 </div>
+
+                <h2 class="sombreado">Factores De Riesgo Asociados</h2>
+                    <!-- Pregunta para HTA -->
+                    <div class="form-field">
+                        <label for="hta">¿Tiene HTA?</label>
+                        <select id="hta">
+                            <option value="">Seleccione una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <!-- Tabla para HTA -->
+                    <table id="htaTable"  class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha diagnostico</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field"><input type="date" id="htaDate" name="htaDate" required></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Pregunta para Dislipidemia -->
+                    <div class="form-field">
+                        <label for="dislipidemia">¿Tiene Dislipidemia?</label>
+                        <select id="dislipidemia">
+                            <option value="">Seleccione una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <!-- Tabla para Dislipidemia -->
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha Diagnostico</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field"><input type="date" id="dislipidemiaDate" name="dislipidemiaDate"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Pregunta para Esteatosis Hepática -->
+                    <div class="form-field">
+                        <label for="esteatosis">¿Tiene Esteatosis Hepática?</label>
+                        <select id="esteatosis">
+                            <option value="">Seleccione una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <!-- Tabla para Esteatosis Hepática y FIB 4 -->
+                    <table id="esteatosisTable" class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha Diagnostico</th>
+                                <th>Esteatosis Hepática</th>
+                                <th>FIB 4</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field"><input type="date" id="esteatosisConsultationDate"
+                                        name="esteatosisConsultationDate" required></td>
+                                <td class="form-field"><input type="number" id="esteatosisHepatica"
+                                        name="esteatosisHepatica" required></td>
+                                <td class="form-field"><input type="text" id="fib4Value" name="fib4Value" required></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Pregunta para SAHOS -->
+                    <div class="form-field">
+                        <label for="sahos">¿Tiene SAHOS?</label>
+                        <select id="sahos" onchange="toggleTable('sahos', 'sahosTable')">
+                            <option value="">Seleccione una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <!-- Tabla para SAHOS -->
+                    <table id="sahosTable" class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>SAHOS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field"><input type="date" id="sahosConsultationDate"
+                                        name="sahosConsultationDate" required></td>
+                                <td class="form-field"><input type="text" id="sahosValue" name="sahosValue" required>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Pregunta para Tabaquismo -->
+                    <div class="form-field">
+                        <label for="tabaquismo">¿Tiene Tabaquismo?</label>
+                        <select id="tabaquismo">
+                            <option value="">Seleccione una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                            <option value="exfumador">Exfumador</option>
+                        </select>
+                    </div>
+
+                    <!-- Tabla para Tabaquismo -->
+                    <table id="tabaquismoTable" class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th># de cig/día</th>
+                                <th>Años fumando</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field"><input type="date" id="tabaquismoConsultationDate"
+                                        name="tabaquismoConsultationDate" required></td>
+                                <td class="form-field"><input type="number" id="cigPerDay" name="cigPerDay" required>
+                                </td>
+                                <td class="form-field"><input type="number" id="yearsSmoking" name="yearsSmoking"
+                                        required></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
             </fieldset>
 
             
