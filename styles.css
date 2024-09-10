@@ -1,0 +1,136 @@
+/* Estilos generales */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #cacaca;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura total de la ventana */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+form {
+    width: 100%;
+    max-width: 1600px; /* Máximo ancho del formulario */
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: auto; /* Permitir desplazamiento horizontal si es necesario */
+    max-height: 100%; /* Altura máxima del formulario */
+    display: flex; /* Usar flexbox para ajustar altura */
+    flex-direction: column; /* Columna para alinear elementos verticalmente */
+}
+
+/* Estilos específicos para la cabecera del formulario */
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-header-left, .form-header-right {
+    flex: 1;
+}
+
+.form-header-center {
+    flex: 2;
+    text-align: center;
+}
+
+.form-header p {
+    margin: 0;
+}
+
+.logo {
+    max-height: 80px;
+}
+
+/* Estilos específicos para campos de información del paciente */
+fieldset {
+    border: 2px solid #7d2d86;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: rgb(242, 237, 245);
+}
+
+legend {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #7d2d86;
+    padding: 0 10px;
+}
+
+.form-field {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: inline-block;
+    width: 150px;
+    margin-right: 10px;
+    text-align: left;
+    margin-top: 18px;
+    margin-bottom: 2px;
+}
+
+.form-field input {
+    padding: 6px; /* Ajustar padding */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 200px; /* Ancho máximo para evitar que se vean muy extendidos */
+    font-size: 13px; /* Tamaño de fuente intermedio */
+    margin: 3px 0; /* Ajustar margen */
+}
+
+.form-field input[type="number"],
+.form-field input[type="date"] {
+    width: auto; /* Ajusta automáticamente el ancho según el contenido */
+}
+
+@media (max-width: 600px) {
+    .form-field label {
+        display: block;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+}
+
+button[type="button"] {
+    background-color: #7d2d86; /* Color corporativo */
+    color: white; /* Color del texto */
+    padding: 10px 16px; /* Ajustar padding */
+    border: none; /* Sin borde */
+    border-radius: 12px; /* Reducir borde redondeado */
+    cursor: pointer; /* Cursor al pasar el mouse */
+    font-size: 15px; /* Tamaño de fuente */
+}
+
+button[type="button"]:hover {
+    background-color: #5c1e5c; /* Color corporativo más oscuro al pasar el mouse */
+}
+
+.hidden {
+    display: none;
+}
+
+.sombreado {
+    background-color: #7d2d86;
+    color: white;
+    border-radius: 5px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    width: 390px;
+}

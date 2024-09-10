@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario de Especialista en Diabetes</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <main>
+        <form id="diabetesForm">
+            <div class="form-header">
+                <div class="form-header-left">
+                    <img src="assets/images/logo2.png" alt="Logo de la Empresa" class="logo" />
+                </div>
+                <div class="form-header-center">
+                    <p>HISTORIA CLÍNICA NEURUM IPS</p>
+                    <p>CC Punto clave Local 203</p>
+                    <p>Cl. 27 #46-70, Medellín</p>
+                </div>
+                <div class="form-header-right">
+                    <p>Historia Clínica Diabetes</p>
+                </div>
+            </div>
+
+            <fieldset>
+                <legend>Información del Paciente</legend>
+
+                <div class="form-field">
+                    <label for="consultationDate">Fecha de la Consulta:</label>
+                    <input type="date" id="consultationDate" name="consultationDate" required />
+                </div>
+
+                <div class="form-field">
+                    <label for="numero_documento">Número Documento</label>
+                    <input type="text" id="documento" name="documento" required />
+                </div>
+
+                <div class="form-field">
+                    <label for="tipo_documento">Tipo Documento</label>
+                    <input type="text" id="tipo_documento" name="tipo_documento" required />
+                </div>
+
+                <div class="form-field">
+                    <label for="primer_nombre">Nombre:</label>
+                    <input type="text" id="primer_nombre" name="primer_nombre" required />
+                </div>
+
+                <div class="form-field">
+                    <label for="primer_nombre">Apellido:</label>
+                    <input type="text" id="primer_apellido" name="primer_apellido" required />
+                </div>
+
+                <div class="form-field">
+                    <label for="fecha_nacimiento">Fecha Nacimiento</label>
+                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required />
+                </div>
+
+
+                <div class="form-field age-field">
+                    <label for="ageYears">Edad:</label>
+                    <input type="number" id="ageYears" name="ageYears" placeholder="Años" required />
+                    <input type="number" id="ageMonths" name="ageMonths" placeholder="Meses" required />
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Motivo de consulta</legend>
+                <div>
+                    <div class="form-field insulina-label">
+                        <label for="motivo_consulta">Motivo de consulta</label>
+                        <select id="motivo_consulta" name="motivo_consulta" class="form-field">
+                            <option value="">Seleccione...</option>
+                            <option value="1">Ingreso</option>
+                            <option value="2">Control</option>
+                            <option value="3">Consulta no programada</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Datos patológicos</legend>
+
+                <div class="form-field">
+                    <label for="diagnosisDate">Fecha diagnóstico:</label>
+                    <input type="date" id="fecha_diagnostico" name="fecha_diagnostico" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="tipo_diabetes">Tipo de diabetes:</label>
+                    <select id="tipo_diabetes" name="tipo_diabetes">
+                        <option value="">Seleccione...</option>
+                        <option value="1">Ninguno</option>
+                        <option value="2">Tipo 1</option>
+                        <option value="3">Tipo 2</option>
+                        <option value="4">Gestacional</option>
+                        <option value="5">Pregestacional 1</option>
+                        <option value="6">Pregestacional 2</option>
+                        <option value="7">Otro</option>
+                    </select>
+                    <input type="text" id="observacion" name="observacion" placeholder="¿Cuál?" class="hidden">
+                    <table>
+                        <tr>
+                            <td><label for="patientDebut">Debut:</label></td>
+                            <td><textarea id="debut" name="debut" rows="4" required></textarea></td>
+                        </tr>
+                    </table>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Complicaciones y Factores de Riesgo</legend>
+                <h2 class="sombreado">Complicaciones microvasculares</h2>
+                <div class="form-field">
+                    <label for="diabeticRetinopathy">¿Tiene evaluación oftalmológica?</label>
+                    <select id="diabeticRetinopathy">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Sección Retinopatía diabética -->
+                <div id="retinopathySection" class="hidden">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha última Evaluación oftalmología</th>
+                                <th>Dx de Retinopatía</th>
+                                <th>Edema macular</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field"><input type="date" id="lastEyeExamDate" name="lastEyeExamDate" required></td>
+                                <td>
+                                    <select id="retinopathyDiagnosis" name="retinopathyDiagnosis">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Proliferativa</option>
+                                        <option value="2">No proliferativa</option>
+                                        <option value="3">Sin retinopatía</option>
+                                    </select>
+                                </td>
+                                <td class="form-field">
+                                    <select id="edemaMacular" name="edemaMacular">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="si">Sí</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pregunta para Nefropatía diabética -->
+                <div class="form-field">
+                    <label for="diabeticNephropathy">¿Tiene nefropatía diabética?</label>
+                    <select id="diabeticNephropathy">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Sección Nefropatía diabética -->
+                <div id="nephropathySection" class="hidden">
+                    <h2>Nefropatía diabética</h2>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>TRR</th>
+                            <th>Trasplante</th>
+                            <th>Creatinina</th>
+                            <th>TFG</th>
+                            <th>Albuminuria</th>
+                            <th>Clasificación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="form-field">
+                                <select id="trr" name="trr">
+                                    <option value="">Seleccione una opción...</option>
+                                    <option value="1">Hemodiálisis</option>
+                                    <option value="2">Peritoneal</option>
+                                    <option value="3">No</option>
+                                </select>
+                            </td>
+                            <td class="form-field">
+                                <select id="transplant" name="transplant">
+                                    <option value="">Seleccione una opción...</option>
+                                    <option value="si">Sí</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </td>
+                            <td class="form-field">
+                                <input type="number" id="creatinine" name="creatinine" min="0" max="1000"
+                                    step="0.01" required>
+                            </td>
+                            <td class="form-field">
+                                <input type="number" id="tfg" name="tfg" min="0" max="1000" step="0.01" required>
+                            </td>
+                            <td class="form-field">
+                                <input type="number" id="albuminuria" name="albuminuria" min="0" max="1000"
+                                    step="0.01" required>
+                            </td>
+                            <td class="form-field">
+                                <input type="text" id="classification" name="classification" required>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pregunta para Neuropatía diabética -->
+            <div class="form-field">
+                <label for="diabeticNeuropathy">¿Tiene Diagnostico de Neuropatia periferica?</label>
+                <select id="sensorySymptoms" name="sensorySymptoms">
+                    <option value="">Seleccione una opción...</option>
+                    <option value="si">Sí</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <!-- Sección Neuropatía diabética -->
+            <div>
+                <h2>Sintomas Neuro-sensoriales</h2>
+                <!-- Campo de selección para "Dolor" -->
+                <div class="form-field">
+                    <label for="sensitiveNeuropathy">Dolor:</label>
+                    <select id="presentaDolor" name="presentaDolor">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Detalles de dolor -->
+                <div id="painDetailsTable">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Localización</th>
+                                <th>Intensidad</th>
+                                <th>Compromiso</th>
+                                <th>Lateralidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select id="localizacion" name="localizacion">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Cabeza</option>
+                                        <option value="2">Cuello</option>
+                                        <option value="3">Hombros</option>
+                                        <option value="4">Brazos</option>
+                                        <option value="5">Manos</option>
+                                        <option value="6">Torso</option>
+                                        <option value="7">Abdomen</option>
+                                        <option value="8">Piernas</option>
+                                        <option value="9">Pies</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="intensidad" name="intensidad">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="compromiso_dolor" name="compromiso_dolor">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Distal</option>
+                                        <option value="2">Proximal</option>
+                                        <option value="3">Ambas</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="lateralidad_dolor" name="lateralidad_dolor">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Simétrico</option>
+                                        <option value="2">Asimétrico</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                
+
+                <!-- Campo de selección para "Hormigueo" -->
+                <div class="form-field">
+                    <label for="tingling">Hormigueo:</label>
+                    <select id="tingling" name="tingling">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Detalles de hormigueo -->
+                <div id="tinglingDetails">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Localización</th>
+                                <th>Intensidad</th>
+                                <th>Compromiso</th>
+                                <th>Lateralidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select id="localizacionhormigueo" name="localizacionhormigueo">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Cabeza</option>
+                                        <option value="2">Cuello</option>
+                                        <option value="3">Hombros</option>
+                                        <option value="4">Brazos</option>
+                                        <option value="5">Manos</option>
+                                        <option value="6">Torso</option>
+                                        <option value="7">Abdomen</option>
+                                        <option value="8">Piernas</option>
+                                        <option value="9">Pies</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="intensidadhormigueo" name="intensidadhormigueo">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="compromisohormigueo" name="compromisohormigueo">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Distal</option>
+                                        <option value="2">Proximal</option>
+                                        <option value="3">Ambas</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="lateralidadhormigueo" name="lateralidadhormigueo">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Simétrico</option>
+                                        <option value="2">Asimétrico</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Campo de selección para "Entumecimiento" -->
+                <div class="form-field">
+                    <label for="entumecimiento">Entumecimiento:</label>
+                    <select id="entumecimiento" name="entumecimiento">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Detalles de entumecimiento -->
+                <div id="numbnessDetails" >
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Localización</th>
+                                <th>Intensidad</th>
+                                <th>Compromiso</th>
+                                <th>Lateralidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select id="localizacionentumecimiento" name="localizacionentumecimiento">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Cabeza</option>
+                                        <option value="2">Cuello</option>
+                                        <option value="3">Hombros</option>
+                                        <option value="4">Brazos</option>
+                                        <option value="5">Manos</option>
+                                        <option value="6">Torso</option>
+                                        <option value="7">Abdomen</option>
+                                        <option value="8">Piernas</option>
+                                        <option value="9">Pies</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="intensidadentumecimiento" name="intensidadentumecimiento">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="compromisoentumecimiento" name="compromisoentumecimiento">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Distal</option>
+                                        <option value="2">Proximal</option>
+                                        <option value="3">Ambas</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="lateralidadentumecimiento" name="lateralidadentumecimiento">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Simétrico</option>
+                                        <option value="2">Asimétrico</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Campo de selección para "Pérdida de Sensibilidad" -->
+                <div class="form-field">
+                    <label for="sensitivityLoss">Pérdida de Sensibilidad:</label>
+                    <select id="sensitivityLoss" name="sensitivityLoss">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Detalles de pérdida de sensibilidad -->
+                <div id="sensitivityLossDetails" >
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Localización</th>
+                                <th>Intensidad</th>
+                                <th>Compromiso</th>
+                                <th>Lateralidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select id="sensitivityLossLocation" name="sensitivityLossLocation">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Cabeza</option>
+                                        <option value="2">Cuello</option>
+                                        <option value="3">Hombros</option>
+                                        <option value="4">Brazos</option>
+                                        <option value="5">Manos</option>
+                                        <option value="6">Torso</option>
+                                        <option value="7">Abdomen</option>
+                                        <option value="8">Piernas</option>
+                                        <option value="9">Pies</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="sensitivityLossIntensity" name="sensitivityLossIntensity">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="sensitivityLossLocationType" name="sensitivityLossLocationType">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="distal">Distal</option>
+                                        <option value="proximal">Proximal</option>
+                                        <option value="ambas">Ambas</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="sensitivityLossSymmetry" name="sensitivityLossSymmetry">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Simétrico</option>
+                                        <option value="2">Asimétrico</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Nueva sección de "Síntomas Motores" -->
+                <h2>Síntomas Motores</h2>
+
+                <!-- Campo de selección para "Calambres" -->
+                <div class="form-field">
+                    <label for="calambres">Calambres:</label>
+                    <select id="calambres" name="calambres">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Detalles de calambres -->
+                <div id="crampsDetails" >
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Localización</th>
+                                <th>Intensidad</th>
+                                <th>Ubicación</th>
+                                <th>Simetría</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select id="calambresLocation" name="calambresLocation">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Cabeza</option>
+                                        <option value="2">Cuello</option>
+                                        <option value="3">Hombros</option>
+                                        <option value="4">Brazos</option>
+                                        <option value="5">Manos</option>
+                                        <option value="6">Torso</option>
+                                        <option value="7">Abdomen</option>
+                                        <option value="8">Piernas</option>
+                                        <option value="9">Pies</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="calambresIntensity" name="calambresIntensity">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="calambresLocationType" name="calambresLocationType">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Distal</option>
+                                        <option value="2">Proximal</option>
+                                        <option value="3">Ambas</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="calambresSymmetry" name="calambresSymmetry">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Simétrico</option>
+                                        <option value="2">Asimétrico</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Campo de selección para "Fasciculaciones" -->
+                <div class="form-field">
+                    <label for="fasciculaciones">Fasciculaciones:</label>
+                    <select id="fasciculaciones" name="fasciculaciones">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Detalles de fasciculaciones -->
+                <div id="fasciculationsDetails">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Localización</th>
+                                <th>Intensidad</th>
+                                <th>Ubicación</th>
+                                <th>Simetría</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select id="fasciculacionesLocation" name="fasciculacionesLocation">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Cabeza</option>
+                                        <option value="2">Cuello</option>
+                                        <option value="3">Hombros</option>
+                                        <option value="4">Brazos</option>
+                                        <option value="5">Manos</option>
+                                        <option value="6">Torso</option>
+                                        <option value="7">Abdomen</option>
+                                        <option value="8">Piernas</option>
+                                        <option value="9">Pies</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="fasciculacionesIntensity" name="fasciculacionesIntensity">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="fasciculacionesLocationType" name="fasciculacionesLocationType">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Distal</option>
+                                        <option value="2">Proximal</option>
+                                        <option value="3">Ambas</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="fasciculacionesSymmetry" name="fasciculacionesSymmetry">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Simétrico</option>
+                                        <option value="2">Asimétrico</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Campo de selección para "Disminución de la Fuerza" -->
+                <div class="form-field">
+                    <label for="disminucionFuerza">Disminución de la Fuerza:</label>
+                    <select id="disminucionFuerza" name="disminucionFuerza">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Detalles de disminución de la fuerza -->
+                <div id="strengthReductionDetails" >
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Localización</th>
+                                <th>Intensidad</th>
+                                <th>Ubicación</th>
+                                <th>Simetría</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select id="disminucionFuerzaLocation" name="disminucionFuerzaLocation">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Cabeza</option>
+                                        <option value="2">Cuello</option>
+                                        <option value="3">Hombros</option>
+                                        <option value="4">Brazos</option>
+                                        <option value="5">Manos</option>
+                                        <option value="6">Torso</option>
+                                        <option value="7">Abdomen</option>
+                                        <option value="8">Piernas</option>
+                                        <option value="9">Pies</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="disminucionFuerzaIntensity" name="disminucionFuerzaIntensity">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="disminucionFuerzaLocationType" name="disminucionFuerzaLocationType">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Distal</option>
+                                        <option value="2">Proximal</option>
+                                        <option value="3">Ambas</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="disminucionFuerzaSymmetry" name="disminucionFuerzaSymmetry">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Simétrico</option>
+                                        <option value="2">Asimétrico</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                
+                <!-- Campo de selección para "Otras Neuropatías" -->
+                <div class="form-field">
+                    <label for="otherNeuropathies">Otras Neuropatías:</label>
+                    <select id="otherNeuropathies" name="otherNeuropathies">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Campo de selección para "Tipo de neuropatía" -->
+                <div class="form-field"  >
+                    <label for="neuropathyType">Tipo de neuropatía:</label>
+                    <select id="neuropathyType" name="neuropathyType">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="1">Disfunción eréctil</option>
+                        <option value="2">Gastroenteroparesia</option>
+                        <option value="3">Disautonomía</option>
+                        <option value="4">Hipotensión ortostática</option>
+                        <option value="5">Mononeuropatias</option>
+                        <option value="6">Sindromes por atrapamiento</option>
+                    </select>
+                </div>
+
+                
+
+               
+                <!-- Pregunta para Pie diabético -->
+                <div class="form-field">
+                    <label for="piediabetico">¿pie diabético?</label>
+                    <select id="piediabetico">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Sección Pie diabético -->
+                <div id="footSection" >
+                    <h2>Pie diabético</h2>
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Antecedente de úlcera</th>
+                                <th>Localización</th>
+                                <th>Antecedente de amputación</th>
+                                <th>Localización</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select id="ulcerHistory" name="ulcerHistory">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="si">Sí</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="ulcerLocation" name="ulcerLocation">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Miembros superiores</option>
+                                        <option value="2">Miembros inferiores</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="amputationHistory" name="amputationHistory">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="si">Sí</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="amputationLocation" name="amputationLocation">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="1">Miembros superiores</option>
+                                        <option value="2">Miembros inferiores</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="sombreado">Complicaciones macrovasculares</h2>
+
+                 <!-- Enfermedad Coronaria -->
+                 <div class="form-field">
+                    <label for="coronaryDisease">¿Enfermedad Coronaria?</label>
+                    <select id="coronaryDisease">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Insuficiencia Cardiaca -->
+                <div class="form-field">
+                    <label for="heartFailure">¿Sufre de Insuficiencia Cardiaca?</label>
+                    <select id="heartFailure">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                 <!-- Enfermedad Neurológica -->
+                 <div class="form-field">
+                    <label for="neurologicalDisease">¿Sufre de Enfermedad Neurológica?</label>
+                    <select id="neurologicalDisease">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <!-- Fibrilación Auricular -->
+                <div class="form-field">
+                    <label for="atrialFibrillation">¿Sufre de Fibrilación Auricular?</label>
+                    <select id="atrialFibrillation">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                 <!-- Enfermedad Vascular Periférica -->
+                 <div class="form-field">
+                    <label for="peripheralVascularDisease">¿Sufre de Enfermedad Vascular Periférica?</label>
+                    <select id="peripheralVascularDisease">
+                        <option value="">Seleccione una opción...</option>
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            
+
+            <div class="form-field">
+                <button type="button" id="buscar-btn">Buscar</button>
+                <button type="button" id="crear-btn">Crear</button>
+                <button type="button" id="actualizar-btn">Actualizar</button>
+                <button type="button" id="eliminar-btn">Eliminar</button>
+                <button type="reset" id="limpiar-btn">Limpiar</button>
+            </div>
+
+            <p id="mensaje"></p>
+        </form>
+    </main>
+
+    <script src="scrip.js"></script>
+</body>
+
+</html>
