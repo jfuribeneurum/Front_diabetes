@@ -789,6 +789,107 @@ async function buscarPaciente() {
                 console.error('Elemento con id "peripheralVascularDisease" no encontrado.');
             }
 
+            // Sección HTA
+const tieneHtaField = document.querySelector('#hta');
+if (tieneHtaField) {
+    tieneHtaField.value = data.tiene_hta || ""; // Asignar el valor del campo si/no
+} else {
+    console.error('Elemento con id "hta" no encontrado.');
+}
+
+const fechaDiagnosticoHtaField = document.querySelector('#htaDate');
+if (fechaDiagnosticoHtaField) {
+    fechaDiagnosticoHtaField.value = data.fecha_diagnostico || ""; // Asignar la fecha del diagnóstico
+} else {
+    console.error('Elemento con id "htaDate" no encontrado.');
+}
+
+// Sección Dislipidemia
+const tieneDislipidemiaField = document.querySelector('#dislipidemia');
+if (tieneDislipidemiaField) {
+    tieneDislipidemiaField.value = data.tiene_dislipidemia || ""; // Asignar el valor del campo si/no
+} else {
+    console.error('Elemento con id "dislipidemia" no encontrado.');
+}
+
+const fechaDiagnosticoDislipidemiaField = document.querySelector('#dislipidemiaDate');
+if (fechaDiagnosticoDislipidemiaField) {
+    fechaDiagnosticoDislipidemiaField.value = data.fecha_diagnostico_dislipidemia || ""; // Asignar la fecha del diagnóstico
+} else {
+    console.error('Elemento con id "dislipidemiaDate" no encontrado.');
+}
+
+// Sección Esteatosis Hepática
+const tieneEsteatosisField = document.querySelector('#esteatosis');
+if (tieneEsteatosisField) {
+    tieneEsteatosisField.value = data.tiene_esteatosis || "";
+} else {
+    console.error('Elemento con id "esteatosis" no encontrado.');
+}
+
+const fechaDiagnosticoEsteatosisField = document.querySelector('#esteatosisConsultationDate');
+if (fechaDiagnosticoEsteatosisField) {
+    fechaDiagnosticoEsteatosisField.value = data.fecha_diagnostico_esteatosis || "";
+} else {
+    console.error('Elemento con id "esteatosisConsultationDate" no encontrado.');
+}
+
+const fib4ValueField = document.querySelector('#fib4Value');
+if (fib4ValueField) {
+    fib4ValueField.value = data.fib4 || "";
+} else {
+    console.error('Elemento con id "fib4Value" no encontrado.');
+}
+
+
+// Sección SAHOS
+const tieneSahosField = document.querySelector('#sahos');
+if (tieneSahosField) {
+    tieneSahosField.value = data.tiene_sahos || "";
+} else {
+    console.error('Elemento con id "sahos" no encontrado.');
+}
+
+const fechaSahosField = document.querySelector('#sahosDate');
+if (fechaSahosField) {
+    fechaSahosField.value = data.fecha_consulta_sahos || "";
+} else {
+    console.error('Elemento con id "sahosDate" no encontrado.');
+}
+
+
+// Sección Tabaquismo
+const tieneTabaquismoField = document.querySelector('#tabaquismo');
+if (tieneTabaquismoField) {
+    tieneTabaquismoField.value = data.tiene_tabaquismo || "";
+} else {
+    console.error('Elemento con id "tabaquismo" no encontrado.');
+}
+
+const fechaTabaquismoField = document.querySelector('#tabaquismoConsultationDate');
+if (fechaTabaquismoField) {
+    fechaTabaquismoField.value = data.fecha_consulta_tabaquismo || "";
+} else {
+    console.error('Elemento con id "tabaquismoConsultationDate" no encontrado.');
+}
+
+const cigPorDiaField = document.querySelector('#cigPerDay');
+if (cigPorDiaField) {
+    cigPorDiaField.value = data.cigarrillos_por_dia || "";
+} else {
+    console.error('Elemento con id "cigPerDay" no encontrado.');
+}
+
+const anosFumandoField = document.querySelector('#yearsSmoking');
+if (anosFumandoField) {
+    anosFumandoField.value = data.anos_fumando || "";
+} else {
+    console.error('Elemento con id "yearsSmoking" no encontrado.');
+}
+
+
+
+
 
             // Calcular y mostrar la edad
             if (data.fecha_nacimiento) {
