@@ -1,11 +1,22 @@
 const apiUrl = "http://localhost:3000/tblpaciente";
 
+
+
 // Función para formatear la fecha en el formato YYYY-MM-DD
 const formatDate = (dateStr) => {
     if (!dateStr) return ""; // Manejo de valores vacíos
     const date = new Date(dateStr);
     return date.toISOString().split("T")[0];
 };
+
+
+// Agregamos el evento click al botón después de que el DOM esté cargado
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('agregarFila').addEventListener('click', agregarFila);
+});
+
+
+
 
 // Función para calcular la edad en años y meses
 const calcularEdad = (fechaNacimiento) => {
@@ -888,9 +899,6 @@ if (anosFumandoField) {
 }
 
 
-
-
-
             // Calcular y mostrar la edad
             if (data.fecha_nacimiento) {
                 const { anios, meses } = calcularEdad(data.fecha_nacimiento);
@@ -915,6 +923,44 @@ if (anosFumandoField) {
         alert("Error al buscar el paciente.");
     }
 }
+
+
+// Función para agregar una nueva fila de comorbilidad
+const agregarFila = () => {
+    // Seleccionamos el tbody de la tabla
+    const tbody = document.querySelector('#tablaComorbilidades tbody');
+
+    // Creamos una nueva fila
+    const nuevaFila = document.createElement('tr');
+
+    // Creamos las celdas para la fecha y la comorbilidad
+    const celdaFecha = document.createElement('td');
+    const celdaComorbilidad = document.createElement('td');
+
+    // Creamos los inputs para cada celda
+    const inputFecha = document.createElement('input');
+    inputFecha.type = 'date';
+    inputFecha.name = 'fechaComorbilidad';
+    inputFecha.required = true;
+
+    const inputComorbilidad = document.createElement('input');
+    inputComorbilidad.type = 'text';
+    inputComorbilidad.name = 'nombreComorbilidad';
+    inputComorbilidad.required = true;
+
+    // Añadimos los inputs a sus respectivas celdas
+    celdaFecha.appendChild(inputFecha);
+    celdaComorbilidad.appendChild(inputComorbilidad);
+
+    // Añadimos las celdas a la nueva fila
+    nuevaFila.appendChild(celdaFecha);
+    nuevaFila.appendChild(celdaComorbilidad);
+
+    // Añadimos la nueva fila al tbody
+    tbody.appendChild(nuevaFila);
+};
+
+
 
 // Función para crear un nuevo paciente
 async function crearPaciente() {
@@ -1072,6 +1118,76 @@ async function actualizarPaciente() {
     }
 
 
+    // Manejo de los datos de síntomas de hormigueo
+data.presenta_hormigueo = document.querySelector('#tingling').value || "";
+
+// Localización del hormigueo
+const localizacionHormigueoField = document.querySelector('#localizacionhormigueo');
+if (localizacionHormigueoField) {
+    data.localizacion_hormigueo = localizacionHormigueoField.value || "";
+}
+
+// Intensidad del hormigueo
+const intensidadHormigueoField = document.querySelector('#intensidadhormigueo');
+if (intensidadHormigueoField) {
+    data.intensidad_hormigueo = intensidadHormigueoField.value || "";
+}
+
+// Compromiso del hormigueo
+const compromisoHormigueoField = document.querySelector('#compromisohormigueo');
+if (compromisoHormigueoField) {
+    data.compromiso_hormigueo = compromisoHormigueoField.value || "";
+}
+
+// Lateralidad del hormigueo
+const lateralidadHormigueoField = document.querySelector('#lateralidadhormigueo');
+if (lateralidadHormigueoField) {
+    data.lateralidad_hormigueo = lateralidadHormigueoField.value || "";
+}
+
+
+// Manejo de los datos de síntomas de entumecimiento
+data.presenta_entumecimiento = document.querySelector('#entumecimiento')?.value || "";
+
+// Localización del entumecimiento
+const localizacionEntumecimientoField = document.querySelector('#localizacionentumecimiento');
+data.localizacion_entumecimiento = localizacionEntumecimientoField ? localizacionEntumecimientoField.value || "" : "";
+
+// Intensidad del entumecimiento
+const intensidadEntumecimientoField = document.querySelector('#intensidadentumecimiento');
+data.intensidad_entumecimiento = intensidadEntumecimientoField ? intensidadEntumecimientoField.value || "" : "";
+
+// Compromiso del entumecimiento
+const compromisoEntumecimientoField = document.querySelector('#compromisoentumecimiento');
+data.compromiso_entumecimiento = compromisoEntumecimientoField ? compromisoEntumecimientoField.value || "" : "";
+
+// Lateralidad del entumecimiento
+const lateralidadEntumecimientoField = document.querySelector('#lateralidadentumecimiento');
+data.lateralidad_entumecimiento = lateralidadEntumecimientoField ? lateralidadEntumecimientoField.value || "" : "";
+
+// Manejo de los datos de pérdida de sensibilidad
+data.presenta_perdida_sensibilidad = document.querySelector('#sensitivityLoss')?.value || "";
+
+// Localización de la pérdida de sensibilidad
+const localizacionPerdidaSensibilidadField = document.querySelector('#sensitivityLossLocation');
+data.localizacion_perdida_sensibilidad = localizacionPerdidaSensibilidadField ? localizacionPerdidaSensibilidadField.value || "" : "";
+
+// Intensidad de la pérdida de sensibilidad
+const intensidadPerdidaSensibilidadField = document.querySelector('#sensitivityLossIntensity');
+data.intensidad_perdida_sensibilidad = intensidadPerdidaSensibilidadField ? intensidadPerdidaSensibilidadField.value || "" : "";
+
+// Tipo de compromiso de la pérdida de sensibilidad
+const compromisoPerdidaSensibilidadField = document.querySelector('#sensitivityLossLocationType');
+data.compromiso_perdida_sensibilidad = compromisoPerdidaSensibilidadField ? compromisoPerdidaSensibilidadField.value || "" : "";
+
+// Lateralidad de la pérdida de sensibilidad
+const lateralidadPerdidaSensibilidadField = document.querySelector('#sensitivityLossSymmetry');
+data.lateralidad_perdida_sensibilidad = lateralidadPerdidaSensibilidadField ? lateralidadPerdidaSensibilidadField.value || "" : "";
+
+// Verificación de los datos
+console.log("Datos enviados:", data);
+
+
     try {
         const response = await fetch(`${apiUrl}/${numeroDocumento}`, {
             method: 'PUT',
@@ -1217,3 +1333,6 @@ if (sensorySymptomsSelect) {
     toggleSensorySymptomsSection(); // Inicializar la visibilidad de la sección
     sensorySymptomsSelect.addEventListener('change', toggleSensorySymptomsSection);
 }
+
+
+

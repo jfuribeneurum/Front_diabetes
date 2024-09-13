@@ -939,96 +939,120 @@
                     </table>
 
                     <!-- Pregunta para Esteatosis Hepática -->
-<div class="form-field">
-    <label for="esteatosis">¿Tiene Esteatosis Hepática?</label>
-    <select id="esteatosis">
-        <option value="">Seleccione una opción...</option>
-        <option value="si">Sí</option>
-        <option value="no">No</option>
-    </select>
-</div>
+                    <div class="form-field">
+                        <label for="esteatosis">¿Tiene Esteatosis Hepática?</label>
+                        <select id="esteatosis">
+                            <option value="">Seleccione una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
 
-<!-- Tabla para Esteatosis Hepática y FIB-4 -->
-<table id="esteatosisTable" class="styled-table">
-    <thead>
-        <tr>
-            <th>Fecha Diagnostico</th>
-            <th>FIB 4</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="form-field">
-                <input type="date" id="esteatosisConsultationDate" name="esteatosisConsultationDate" required>
-            </td>
-            <td class="form-field">
-                <input type="number" step="0.01" id="fib4Value" name="fib4Value" required>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                    <!-- Tabla para Esteatosis Hepática y FIB-4 -->
+                    <table id="esteatosisTable" class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha Diagnostico</th>
+                                <th>FIB 4</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field">
+                                    <input type="date" id="esteatosisConsultationDate" name="esteatosisConsultationDate"
+                                        required>
+                                </td>
+                                <td class="form-field">
+                                    <input type="number" step="0.01" id="fib4Value" name="fib4Value" required>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-<!-- Pregunta para SAHOS -->
-<div class="form-field">
-    <label for="sahos">¿Tiene SAHOS?</label>
-    <select id="sahos">
-        <option value="">Seleccione una opción...</option>
-        <option value="si">Sí</option>
-        <option value="no">No</option>
-    </select>
-</div>
+                    <!-- Pregunta para SAHOS -->
+                    <div class="form-field">
+                        <label for="sahos">¿Tiene SAHOS?</label>
+                        <select id="sahos">
+                            <option value="">Seleccione una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
 
-<!-- Tabla para SAHOS -->
-<table id="sahosTable" class="styled-table">
-    <thead>
-        <tr>
-            <th>Fecha</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="form-field">
-                <input type="date" id="sahosDate" name="sahosConsultationDate">
-            </td>
-        </tr>
-    </tbody>
-</table>
+                    <!-- Tabla para SAHOS -->
+                    <table id="sahosTable" class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field">
+                                    <input type="date" id="sahosDate" name="sahosConsultationDate">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
 
                     <!-- Pregunta para Tabaquismo -->
-<div class="form-field">
-    <label for="tabaquismo">¿Tiene Tabaquismo?</label>
-    <select id="tabaquismo">
-        <option value="">Seleccione una opción...</option>
-        <option value="si">Sí</option>
-        <option value="no">No</option>
-        <option value="exfumador">Exfumador</option>
-    </select>
-</div>
+                    <div class="form-field">
+                        <label for="tabaquismo">¿Tiene Tabaquismo?</label>
+                        <select id="tabaquismo">
+                            <option value="">Seleccione una opción...</option>
+                            <option value="si">Sí</option>
+                            <option value="no">No</option>
+                            <option value="exfumador">Exfumador</option>
+                        </select>
+                    </div>
 
-<!-- Tabla para Tabaquismo -->
-<table id="tabaquismoTable" class="styled-table">
+                    <!-- Tabla para Tabaquismo -->
+                    <table id="tabaquismoTable" class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th># de cig/día</th>
+                                <th>Años fumando</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field">
+                                    <input type="date" id="tabaquismoConsultationDate" name="tabaquismoConsultationDate"
+                                        required>
+                                </td>
+                                <td class="form-field">
+                                    <input type="number" id="cigPerDay" name="cigPerDay" required>
+                                </td>
+                                <td class="form-field">
+                                    <input type="number" id="yearsSmoking" name="yearsSmoking" required>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2 class="sombreado">Comorbilidades</h2>
+<table class="styled-table" id="tablaComorbilidades">
     <thead>
         <tr>
             <th>Fecha</th>
-            <th># de cig/día</th>
-            <th>Años fumando</th>
+            <th>Comorbilidad</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td class="form-field">
-                <input type="date" id="tabaquismoConsultationDate" name="tabaquismoConsultationDate" required>
+                <input type="date" id="fechaComorbilidad" name="fechaComorbilidad" required>
             </td>
             <td class="form-field">
-                <input type="number" id="cigPerDay" name="cigPerDay" required>
-            </td>
-            <td class="form-field">
-                <input type="number" id="yearsSmoking" name="yearsSmoking" required>
+                <input type="text" id="nombreComorbilidad" name="nombreComorbilidad" required>
             </td>
         </tr>
     </tbody>
 </table>
+<button id="agregarFila" type="button">Agregar Comorbilidad</button>
+
 
 
             </fieldset>
