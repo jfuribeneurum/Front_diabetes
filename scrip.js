@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:3000/tblpaciente";
+const apiUrl = "https://back-diabetes-vqqr.onrender.com/tblpaciente";
 
 
 
