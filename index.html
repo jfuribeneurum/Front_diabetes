@@ -35,7 +35,7 @@
                     <button type="button" id="eliminar-btn">Eliminar</button>
                     <button type="reset" id="limpiar-btn">Limpiar</button>
                 </div>
-                
+
                 <!-- Agrega el contenedor para la animación de carga -->
                 <div id="loading" class="loading" style="display: none;">
                     <div class="spinner"></div>
@@ -173,7 +173,7 @@
 
                 <!-- Pregunta para Nefropatía diabética -->
                 <div class="form-field">
-                    <label for="diabeticNephropathy">¿Tiene nefropatía diabética?</label>
+                    <label for="diabeticNephropathy">¿Tiene antecedente de nefropatía diabética?</label>
                     <select id="diabeticNephropathy">
                         <option value="">Seleccione una opción...</option>
                         <option value="si">Sí</option>
@@ -228,6 +228,36 @@
                                 </td>
                             </tr>
                         </tbody>
+                    </table>
+
+
+                    <table class="styled-table"></table>
+                    <thead>
+                        <tr>
+                            <th>Creatinina</th>
+                            <th>TFG</th>
+                            <th>Albuminuria</th>
+                            <th>Clasificación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="form-field">
+                                <input type="number" id="creatinine" name="creatinine" min="0" max="1000" step="0.01"
+                                    required>
+                            </td>
+                            <td class="form-field">
+                                <input type="number" id="tfg" name="tfg" min="0" max="1000" step="0.01" required>
+                            </td>
+                            <td class="form-field">
+                                <input type="number" id="albuminuria" name="albuminuria" min="0" max="1000" step="0.01"
+                                    required>
+                            </td>
+                            <td class="form-field">
+                                <input type="text" id="classification" name="classification" required>
+                            </td>
+                        </tr>
+                    </tbody>
                     </table>
                 </div>
 
@@ -1039,28 +1069,25 @@
                     </table>
 
                     <h2 class="sombreado">Comorbilidades</h2>
-<table class="styled-table" id="tablaComorbilidades">
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Comorbilidad</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="form-field">
-                <input type="date" id="fechaComorbilidad" name="fechaComorbilidad" required>
-            </td>
-            <td class="form-field">
-                <input type="text" id="nombreComorbilidad" name="nombreComorbilidad" required>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<button id="agregarFila" type="button">Agregar Comorbilidad</button>
-
-
-
+                    <table class="styled-table" id="tablaComorbilidades">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Comorbilidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field">
+                                    <input type="date" id="fechaComorbilidad" name="fechaComorbilidad" required>
+                                </td>
+                                <td class="form-field">
+                                    <input type="text" id="nombreComorbilidad" name="nombreComorbilidad" required>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button id="agregarFila" type="button">Agregar Comorbilidad</button>
             </fieldset>
 
 

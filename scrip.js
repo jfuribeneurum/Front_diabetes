@@ -1,4 +1,5 @@
-const apiUrl = "https://back-diabetes-vqqr.onrender.com/tblpaciente";
+const apiUrl = "http://localhost:3000/tblpaciente";
+
 
 
 // Función para formatear la fecha en el formato YYYY-MM-DD
@@ -62,14 +63,9 @@ const limpiarFormulario = () => {
 
 // Función para buscar un paciente
 async function buscarPaciente() {
-    // Mostrar la animación de carga
-    document.getElementById('loading').style.display = 'flex';
-
     const numeroDocumento = prompt("Ingrese el número de documento del paciente:");
     if (!numeroDocumento) {
         alert("Debe ingresar un número de documento.");
-        // Ocultar la animación de carga si no se ingresa el número de documento
-        document.getElementById('loading').style.display = 'none';
         return;
     }
 
@@ -912,6 +908,7 @@ if (anosFumandoField) {
 
             //  'data' contiene los datos del paciente directamente
             if (data && data.id) {  // Verificar si 'data' tiene el campo 'id' que indica que hay datos del paciente
+                alert("Paciente encontrado.");
                 console.log("Datos del paciente:", data);
             } else {
                 alert("Paciente no encontrado.");
@@ -924,9 +921,6 @@ if (anosFumandoField) {
     } catch (error) {
         console.error("Error al buscar el paciente", error);
         alert("Error al buscar el paciente.");
-    } finally {
-        // Ocultar la animación de carga
-        document.getElementById('loading').style.display = 'none';
     }
 }
 
