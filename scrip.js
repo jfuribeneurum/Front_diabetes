@@ -1,6 +1,28 @@
-const apiUrl = "https://back-diabetes-vqqr.onrender.com/tblpaciente";
+const apiUrl = "http://localhost:3000/tblpaciente";
 
 
+
+const formatAndCalcularEdad = (fechaNacimiento) => {
+    if (!fechaNacimiento) return { fechaFormateada: "", edad: { anios: 0, meses: 0 } };
+
+    const nacimiento = new Date(fechaNacimiento);
+    const fechaFormateada = nacimiento.toISOString().split("T")[0];
+
+    const fechaActual = new Date();
+    let edadAnios = fechaActual.getFullYear() - nacimiento.getFullYear();
+    let edadMeses = fechaActual.getMonth() - nacimiento.getMonth();
+
+    if (edadMeses < 0) {
+        edadAnios--;
+        edadMeses += 12;
+    }
+
+    if (fechaActual.getDate() < nacimiento.getDate()) {
+        edadMeses--;
+    }
+
+    return { fechaFormateada, edad: { anios: edadAnios, meses: edadMeses } };
+};
 // Función para formatear la fecha en el formato YYYY-MM-DD
 const formatDate = (dateStr) => {
     if (!dateStr) return ""; // Manejo de valores vacíos
@@ -140,221 +162,85 @@ async function buscarPaciente() {
                 observacionField.value = data.observacion || "";
             }
 
-            // Datos de retinopatía
-            const consultationDateField = document.querySelector('#consultationDate');
-            if (consultationDateField) {
-                consultationDateField.value = formatDate(data.fecha_consulta);
-            }
+            // Función genérica para establecer el valor de un campo
+            const setFieldValue = (selector, value, formatFn = null) => {
+                const field = document.querySelector(selector);
+                if (field) {
+                    field.value = formatFn ? formatFn(value) : value || "";
+                }
+            };
 
-            const lastEyeExamDateField = document.querySelector('#lastEyeExamDate');
-            if (lastEyeExamDateField) {
-                lastEyeExamDateField.value = formatDate(data.fecha_ultima_evaluacion);
-            }
-
-            const retinopathyDiagnosisField = document.querySelector('[name="retinopathyDiagnosis"]');
-            if (retinopathyDiagnosisField) {
-                const opciones = retinopathyDiagnosisField.options;
-                for (let i = 0; i < opciones.length; i++) {
-                    if (opciones[i].text.toLowerCase() === data.dx_retinopatia.toLowerCase()) {
-                        retinopathyDiagnosisField.value = opciones[i].value;
-                        break;
+            // Función genérica para seleccionar la opción correcta en un campo select
+            const setSelectOption = (selector, value) => {
+                const selectField = document.querySelector(selector);
+                if (selectField) {
+                    const options = selectField.options;
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i].text.toLowerCase() === value.toLowerCase()) {
+                            selectField.value = options[i].value;
+                            break;
+                        }
                     }
                 }
-            }
+            };
 
-
-            const edemaMacularField = document.querySelector('#edemaMacular');
-            if (edemaMacularField) {
-                edemaMacularField.value = data.edema_macular || "";
-            }
-
-            document.querySelector('#diabeticRetinopathy').value = data.tiene_evaluacion_oftalmologica || "";
-
-            // Mostrar u ocultar la sección de retinopatía
-            toggleRetinopathySection();
-
-
-
-            //datos nefropatia
-            // Datos de nefropatía
-
-            document.querySelector('#diabeticNephropathy').value = data.tiene_nefropatia || "";
-
-            const transplantField = document.querySelector('#transplant');
-            if (transplantField) {
-                transplantField.value = data.trasplante || "";
-            }
-
-            const creatinineField = document.querySelector('#creatinine');
-            if (creatinineField) {
-                creatinineField.value = data.creatinina || "";
-            }
-
-            const tfgField = document.querySelector('#tfg');
-            if (tfgField) {
-                tfgField.value = data.tfg || "";
-            }
-
-            const albuminuriaField = document.querySelector('#albuminuria');
-            if (albuminuriaField) {
-                albuminuriaField.value = data.albuminuria || "";
-            }
-
-            const classificationField = document.querySelector('#classification');
-            if (classificationField) {
-                classificationField.value = data.clasificacion || "";
-            }
-
-            const trrField = document.querySelector('#trr');
-            if (trrField) {
-                const opciones = trrField.options;
-                for (let i = 0; i < opciones.length; i++) {
-                    if (opciones[i].text.toLowerCase() === data.trr.toLowerCase()) {
-                        trrField.value = opciones[i].value;
-                        break;
+            // Función para inicializar los datos en campos de texto y select
+            const initializeDataFields = (dataFields) => {
+                dataFields.forEach(({ type, selector, value, formatFn }) => {
+                    if (type === "text") {
+                        setFieldValue(selector, value, formatFn);
+                    } else if (type === "select") {
+                        setSelectOption(selector, value);
                     }
-                }
-            }
+                });
+            };
 
-            toggleNephropathySection();
+            // Datos para retinopatía
+            const retinopathyFields = [
+                { type: "text", selector: '#consultationDate', value: data.fecha_consulta, formatFn: formatDate },
+                { type: "text", selector: '#lastEyeExamDate', value: data.fecha_ultima_evaluacion, formatFn: formatDate },
+                { type: "select", selector: '[name="retinopathyDiagnosis"]', value: data.dx_retinopatia },
+                { type: "text", selector: '#edemaMacular', value: data.edema_macular },
+                { type: "text", selector: '#diabeticRetinopathy', value: data.tiene_evaluacion_oftalmologica }
+            ];
 
-            // Datos de síntomas sensoriales
-            const sensorySymptomsField = document.querySelector('#sensorySymptoms');
-            if (sensorySymptomsField) {
-                sensorySymptomsField.value = data.tiene_evaluacion_neurologica || "";
-            } else {
-                console.error('Elemento con id "sensorySymptoms" no encontrado.');
-            }
+            // Datos para nefropatía
+            const nephropathyFields = [
+                { type: "text", selector: '#diabeticNephropathy', value: data.tiene_nefropatia },
+                { type: "text", selector: '#transplant', value: data.trasplante },
+                { type: "text", selector: '#creatinine', value: data.creatinina },
+                { type: "text", selector: '#tfg', value: data.tfg },
+                { type: "text", selector: '#albuminuria', value: data.albuminuria },
+                { type: "text", selector: '#classification', value: data.clasificacion },
+                { type: "select", selector: '#trr', value: data.trr }
+            ];
 
-            const fechaConsultaField = document.querySelector('#consultationDate');
-            if (fechaConsultaField) {
-                fechaConsultaField.value = data.fecha_consulta ? formatDate(data.fecha_consulta) : "";
-            } else {
-                console.error('Elemento con id "consultationDate" no encontrado.');
-            }
+            // Datos para síntomas sensoriales
+const sensorySymptomsFields = [
+    { type: "text", selector: '#sensorySymptoms', value: data.tiene_evaluacion_neurologica },
+    { type: "text", selector: '#consultationDate', value: data.fecha_consulta, formatFn: formatDate },
+    { type: "select", selector: '#localizacion', value: data.localizacion },
+    { type: "select", selector: '#intensidad', value: data.intensidad },
+    { type: "select", selector: '#compromiso_dolor', value: data.compromiso_dolor },
+    { type: "select", selector: '#lateralidad_dolor', value: data.lateralidad_dolor },
+    { type: "text", selector: '#presentaDolor', value: data.presenta_dolor },
+    { type: "text", selector: '#tingling', value: data.presenta_hormigueo },
+    { type: "select", selector: '#localizacionhormigueo', value: data.localizacion_hormigueo },
+    { type: "select", selector: '#intensidadhormigueo', value: data.intensidad_hormigueo },
+    { type: "select", selector: '#compromisohormigueo', value: data.compromiso_hormigueo },
+    { type: "select", selector: '#lateralidadhormigueo', value: data.lateralidad_hormigueo }
+];
 
+            // Inicializar campos de retinopatía y nefropatía
+            initializeDataFields(retinopathyFields);
+            initializeDataFields(nephropathyFields);
+            initializeDataFields(sensorySymptomsFields);
 
+            // Mostrar u ocultar las secciones correspondientes
+            initializeToggleSection("diabeticRetinopathy", "retinopathySection");
+            initializeToggleSection("diabeticNephropathy", "nephropathySection");
 
-            const localizacionField = document.querySelector('#localizacion');
-            if (localizacionField) {
-                const opciones = localizacionField.options;
-                for (let i = 0; i < opciones.length; i++) {
-                    if (opciones[i].text.toLowerCase() === data.localizacion.toLowerCase()) {
-                        localizacionField.value = opciones[i].value;
-                        break;
-                    }
-                }
-            } else {
-                console.error('Elemento con id "location" no encontrado.');
-            }
-
-            const intensidadField = document.querySelector('#intensidad');
-            if (intensidadField) {
-                const opciones = intensidadField.options;
-                for (let i = 0; i < opciones.length; i++) {
-                    if (opciones[i].value === data.intensidad) {
-                        intensidadField.value = opciones[i].value;
-                        break;
-                    }
-                }
-            } else {
-                console.error('Elemento con id "intensity" no encontrado.');
-            }
-
-            const compromisoField = document.querySelector('#compromiso_dolor');
-            if (compromisoField) {
-                const opciones = compromisoField.options;
-                for (let i = 0; i < opciones.length; i++) {
-                    if (opciones[i].text.toLowerCase() === data.compromiso_dolor.toLowerCase()) {
-                        compromisoField.value = opciones[i].value;
-                        break;
-                    }
-                }
-            } else {
-                console.error('Elemento con id "compromiso_dolor" no encontrado.');
-            }
-
-            const lateralidadField = document.querySelector('#lateralidad_dolor');
-            if (lateralidadField) {
-                const opciones = lateralidadField.options;
-                for (let i = 0; i < opciones.length; i++) {
-                    if (opciones[i].text.toLowerCase() === data.lateralidad_dolor.toLowerCase()) {
-                        lateralidadField.value = opciones[i].value;
-                        break;
-                    }
-                }
-            } else {
-                console.error('Elemento con id "lateralidad_dolor" no encontrado.');
-            }
-
-            const presentaDolorField = document.querySelector('#presentaDolor');
-            if (presentaDolorField) {
-                presentaDolorField.value = data.presenta_dolor || "";
-            } else {
-                console.error('Elemento con id "presentaDolor" no encontrado.');
-            }
-
-            //seccion hormigueo
-            const presentaHormigueoField = document.querySelector('#tingling');
-            if (presentaHormigueoField) {
-                presentaHormigueoField.value = data.presenta_hormigueo || "";
-            } else {
-                console.error('Elemento con id "presentaHormigueo" no encontrado.');
-            }
-
-
-            const localizacionhormigueoField = document.querySelector('#localizacionhormigueo');
-            if (localizacionhormigueoField) {
-                const opciones = localizacionhormigueoField.options;
-                for (let i = 0; i < opciones.length; i++) {
-                    if (opciones[i].text.toLowerCase() === data.localizacion_hormigueo.toLowerCase()) {
-                        localizacionhormigueoField.value = opciones[i].value;
-                        break;
-                    }
-                }
-            } else {
-                console.error('Elemento con id "localizacionhormigueoField" no encontrado.');
-            }
-
-            const intensidadhormigueoField = document.querySelector('#intensidadhormigueo');
-            if (intensidadhormigueoField) {
-                const opciones = intensidadhormigueoField.options;
-                for (let i = 0; i < opciones.length; i++) {
-                    if (opciones[i].value === data.intensidad_hormigueo) {
-                        intensidadhormigueoField.value = opciones[i].value;
-                        break;
-                    }
-                }
-            } else {
-                console.error('Elemento con id "intensityhormigueo" no encontrado.');
-            }
-
-            const compromisohormigueoField = document.querySelector('#compromisohormigueo');
-            if (compromisohormigueoField) {
-                const opciones = compromisohormigueoField.options;
-                for (let i = 0; i < opciones.length; i++) {
-                    if (opciones[i].text.toLowerCase() === data.compromiso_hormigueo.toLowerCase()) {
-                        compromisohormigueoField.value = opciones[i].value;
-                        break;
-                    }
-                }
-            } else {
-                console.error('Elemento con id "compromiso_dolor" no encontrado.');
-            }
-
-            const lateralidadhormigueoField = document.querySelector('#lateralidadhormigueo');
-            if (lateralidadhormigueoField) {
-                const opciones = lateralidadhormigueoField.options;
-                for (let i = 0; i < opciones.length; i++) {
-                    if (opciones[i].text.toLowerCase() === data.lateralidad_hormigueo.toLowerCase()) {
-                        lateralidadhormigueoField.value = opciones[i].value;
-                        break;
-                    }
-                }
-            } else {
-                console.error('Elemento con id "lateralidad_dolor" no encontrado.');
-            }
-
+           
 
             // Sección entumecimiento
             const presentaEntumecimientoField = document.querySelector('#entumecimiento');
@@ -403,6 +289,8 @@ async function buscarPaciente() {
                 console.error('Elemento con id "compromisoentumecimiento" no encontrado.');
             }
 
+
+
             const lateralidadEntumecimientoField = document.querySelector('#lateralidadentumecimiento');
             if (lateralidadEntumecimientoField) {
                 const opciones = lateralidadEntumecimientoField.options;
@@ -415,6 +303,8 @@ async function buscarPaciente() {
             } else {
                 console.error('Elemento con id "lateralidadentumecimiento" no encontrado.');
             }
+
+            initializeToggleSection("entumecimiento", "numbnessDetails");
 
 
             // Sección Pérdida de Sensibilidad
@@ -477,6 +367,7 @@ async function buscarPaciente() {
                 console.error('Elemento con id "sensitivityLossSymmetry" no encontrado.');
             }
 
+            initializeToggleSection("sensitivityLoss", "sensitivityLossDetails");
 
             // Sección Calambres
             const presentaCalambresField = document.querySelector('#calambres');
@@ -538,6 +429,7 @@ async function buscarPaciente() {
                 console.error('Elemento con id "calambresSymmetry" no encontrado.');
             }
 
+            initializeToggleSection("calambres", "crampsDetails");
 
             // Presenta Fasciculaciones
             const presentaFasciculacionesField = document.querySelector('#fasciculaciones');
@@ -631,7 +523,7 @@ async function buscarPaciente() {
                 console.error('Elemento con id "fasciculacionesSymmetry" no encontrado.');
             }
 
-
+            initializeToggleSection("fasciculaciones", "fasciculationsDetails");
 
             // Sección Disminución de la Fuerza
             const presentaDisminucionFuerzaField = document.querySelector('#disminucionFuerza');
@@ -693,6 +585,8 @@ async function buscarPaciente() {
                 console.error('Elemento con id "disminucionFuerzaSymmetry" no encontrado.');
             }
 
+            initializeToggleSection("disminucionFuerza", "strengthReductionDetails");
+
             // Sección Otras Neuropatías
             const presentaOtrasNeuropatiasField = document.querySelector('#otherNeuropathies');
             if (presentaOtrasNeuropatiasField) {
@@ -711,9 +605,11 @@ async function buscarPaciente() {
                     }
                 }
             } else {
-                console.error('Elemento con id "tiponeuropatiafield" no encontrado.');
+                console.error('Elemento con id "neuropathyType" no encontrado.');
             }
 
+            // Inicializar solo con los parámetros necesarios
+            initializeToggleSection("otherNeuropathies", "neuropathyType");
 
             // Sección Pie Diabético
             const presentaPieDiabeticoField = document.querySelector('#piediabetico');
@@ -767,6 +663,8 @@ async function buscarPaciente() {
                 console.error('Elemento con id "amputationLocation" no encontrado.');
             }
 
+            initializeToggleSection("piediabetico", "footSection");
+
 
             // Sección Complicaciones Macrovasculares
             const presentaEnfermedadCoronariaField = document.querySelector('#coronaryDisease');
@@ -805,102 +703,102 @@ async function buscarPaciente() {
             }
 
             // Sección HTA
-const tieneHtaField = document.querySelector('#hta');
-if (tieneHtaField) {
-    tieneHtaField.value = data.tiene_hta || ""; // Asignar el valor del campo si/no
-} else {
-    console.error('Elemento con id "hta" no encontrado.');
-}
+            const tieneHtaField = document.querySelector('#hta');
+            if (tieneHtaField) {
+                tieneHtaField.value = data.tiene_hta || ""; // Asignar el valor del campo si/no
+            } else {
+                console.error('Elemento con id "hta" no encontrado.');
+            }
 
-const fechaDiagnosticoHtaField = document.querySelector('#htaDate');
-if (fechaDiagnosticoHtaField) {
-    fechaDiagnosticoHtaField.value = data.fecha_diagnostico || ""; // Asignar la fecha del diagnóstico
-} else {
-    console.error('Elemento con id "htaDate" no encontrado.');
-}
+            const fechaDiagnosticoHtaField = document.querySelector('#htaDate');
+            if (fechaDiagnosticoHtaField) {
+                fechaDiagnosticoHtaField.value = data.fecha_diagnostico || ""; // Asignar la fecha del diagnóstico
+            } else {
+                console.error('Elemento con id "htaDate" no encontrado.');
+            }
 
-// Sección Dislipidemia
-const tieneDislipidemiaField = document.querySelector('#dislipidemia');
-if (tieneDislipidemiaField) {
-    tieneDislipidemiaField.value = data.tiene_dislipidemia || ""; // Asignar el valor del campo si/no
-} else {
-    console.error('Elemento con id "dislipidemia" no encontrado.');
-}
+            // Sección Dislipidemia
+            const tieneDislipidemiaField = document.querySelector('#dislipidemia');
+            if (tieneDislipidemiaField) {
+                tieneDislipidemiaField.value = data.tiene_dislipidemia || ""; // Asignar el valor del campo si/no
+            } else {
+                console.error('Elemento con id "dislipidemia" no encontrado.');
+            }
 
-const fechaDiagnosticoDislipidemiaField = document.querySelector('#dislipidemiaDate');
-if (fechaDiagnosticoDislipidemiaField) {
-    fechaDiagnosticoDislipidemiaField.value = data.fecha_diagnostico_dislipidemia || ""; // Asignar la fecha del diagnóstico
-} else {
-    console.error('Elemento con id "dislipidemiaDate" no encontrado.');
-}
+            const fechaDiagnosticoDislipidemiaField = document.querySelector('#dislipidemiaDate');
+            if (fechaDiagnosticoDislipidemiaField) {
+                fechaDiagnosticoDislipidemiaField.value = data.fecha_diagnostico_dislipidemia || ""; // Asignar la fecha del diagnóstico
+            } else {
+                console.error('Elemento con id "dislipidemiaDate" no encontrado.');
+            }
 
-// Sección Esteatosis Hepática
-const tieneEsteatosisField = document.querySelector('#esteatosis');
-if (tieneEsteatosisField) {
-    tieneEsteatosisField.value = data.tiene_esteatosis || "";
-} else {
-    console.error('Elemento con id "esteatosis" no encontrado.');
-}
+            // Sección Esteatosis Hepática
+            const tieneEsteatosisField = document.querySelector('#esteatosis');
+            if (tieneEsteatosisField) {
+                tieneEsteatosisField.value = data.tiene_esteatosis || "";
+            } else {
+                console.error('Elemento con id "esteatosis" no encontrado.');
+            }
 
-const fechaDiagnosticoEsteatosisField = document.querySelector('#esteatosisConsultationDate');
-if (fechaDiagnosticoEsteatosisField) {
-    fechaDiagnosticoEsteatosisField.value = data.fecha_diagnostico_esteatosis || "";
-} else {
-    console.error('Elemento con id "esteatosisConsultationDate" no encontrado.');
-}
+            const fechaDiagnosticoEsteatosisField = document.querySelector('#esteatosisConsultationDate');
+            if (fechaDiagnosticoEsteatosisField) {
+                fechaDiagnosticoEsteatosisField.value = data.fecha_diagnostico_esteatosis || "";
+            } else {
+                console.error('Elemento con id "esteatosisConsultationDate" no encontrado.');
+            }
 
-const fib4ValueField = document.querySelector('#fib4Value');
-if (fib4ValueField) {
-    fib4ValueField.value = data.fib4 || "";
-} else {
-    console.error('Elemento con id "fib4Value" no encontrado.');
-}
-
-
-// Sección SAHOS
-const tieneSahosField = document.querySelector('#sahos');
-if (tieneSahosField) {
-    tieneSahosField.value = data.tiene_sahos || "";
-} else {
-    console.error('Elemento con id "sahos" no encontrado.');
-}
-
-const fechaSahosField = document.querySelector('#sahosDate');
-if (fechaSahosField) {
-    fechaSahosField.value = data.fecha_consulta_sahos || "";
-} else {
-    console.error('Elemento con id "sahosDate" no encontrado.');
-}
+            const fib4ValueField = document.querySelector('#fib4Value');
+            if (fib4ValueField) {
+                fib4ValueField.value = data.fib4 || "";
+            } else {
+                console.error('Elemento con id "fib4Value" no encontrado.');
+            }
 
 
-// Sección Tabaquismo
-const tieneTabaquismoField = document.querySelector('#tabaquismo');
-if (tieneTabaquismoField) {
-    tieneTabaquismoField.value = data.tiene_tabaquismo || "";
-} else {
-    console.error('Elemento con id "tabaquismo" no encontrado.');
-}
+            // Sección SAHOS
+            const tieneSahosField = document.querySelector('#sahos');
+            if (tieneSahosField) {
+                tieneSahosField.value = data.tiene_sahos || "";
+            } else {
+                console.error('Elemento con id "sahos" no encontrado.');
+            }
 
-const fechaTabaquismoField = document.querySelector('#tabaquismoConsultationDate');
-if (fechaTabaquismoField) {
-    fechaTabaquismoField.value = data.fecha_consulta_tabaquismo || "";
-} else {
-    console.error('Elemento con id "tabaquismoConsultationDate" no encontrado.');
-}
+            const fechaSahosField = document.querySelector('#sahosDate');
+            if (fechaSahosField) {
+                fechaSahosField.value = data.fecha_consulta_sahos || "";
+            } else {
+                console.error('Elemento con id "sahosDate" no encontrado.');
+            }
 
-const cigPorDiaField = document.querySelector('#cigPerDay');
-if (cigPorDiaField) {
-    cigPorDiaField.value = data.cigarrillos_por_dia || "";
-} else {
-    console.error('Elemento con id "cigPerDay" no encontrado.');
-}
 
-const anosFumandoField = document.querySelector('#yearsSmoking');
-if (anosFumandoField) {
-    anosFumandoField.value = data.anos_fumando || "";
-} else {
-    console.error('Elemento con id "yearsSmoking" no encontrado.');
-}
+            // Sección Tabaquismo
+            const tieneTabaquismoField = document.querySelector('#tabaquismo');
+            if (tieneTabaquismoField) {
+                tieneTabaquismoField.value = data.tiene_tabaquismo || "";
+            } else {
+                console.error('Elemento con id "tabaquismo" no encontrado.');
+            }
+
+            const fechaTabaquismoField = document.querySelector('#tabaquismoConsultationDate');
+            if (fechaTabaquismoField) {
+                fechaTabaquismoField.value = data.fecha_consulta_tabaquismo || "";
+            } else {
+                console.error('Elemento con id "tabaquismoConsultationDate" no encontrado.');
+            }
+
+            const cigPorDiaField = document.querySelector('#cigPerDay');
+            if (cigPorDiaField) {
+                cigPorDiaField.value = data.cigarrillos_por_dia || "";
+            } else {
+                console.error('Elemento con id "cigPerDay" no encontrado.');
+            }
+
+            const anosFumandoField = document.querySelector('#yearsSmoking');
+            if (anosFumandoField) {
+                anosFumandoField.value = data.anos_fumando || "";
+            } else {
+                console.error('Elemento con id "yearsSmoking" no encontrado.');
+            }
 
 
             // Calcular y mostrar la edad
@@ -1125,73 +1023,73 @@ async function actualizarPaciente() {
 
 
     // Manejo de los datos de síntomas de hormigueo
-data.presenta_hormigueo = document.querySelector('#tingling').value || "";
+    data.presenta_hormigueo = document.querySelector('#tingling').value || "";
 
-// Localización del hormigueo
-const localizacionHormigueoField = document.querySelector('#localizacionhormigueo');
-if (localizacionHormigueoField) {
-    data.localizacion_hormigueo = localizacionHormigueoField.value || "";
-}
+    // Localización del hormigueo
+    const localizacionHormigueoField = document.querySelector('#localizacionhormigueo');
+    if (localizacionHormigueoField) {
+        data.localizacion_hormigueo = localizacionHormigueoField.value || "";
+    }
 
-// Intensidad del hormigueo
-const intensidadHormigueoField = document.querySelector('#intensidadhormigueo');
-if (intensidadHormigueoField) {
-    data.intensidad_hormigueo = intensidadHormigueoField.value || "";
-}
+    // Intensidad del hormigueo
+    const intensidadHormigueoField = document.querySelector('#intensidadhormigueo');
+    if (intensidadHormigueoField) {
+        data.intensidad_hormigueo = intensidadHormigueoField.value || "";
+    }
 
-// Compromiso del hormigueo
-const compromisoHormigueoField = document.querySelector('#compromisohormigueo');
-if (compromisoHormigueoField) {
-    data.compromiso_hormigueo = compromisoHormigueoField.value || "";
-}
+    // Compromiso del hormigueo
+    const compromisoHormigueoField = document.querySelector('#compromisohormigueo');
+    if (compromisoHormigueoField) {
+        data.compromiso_hormigueo = compromisoHormigueoField.value || "";
+    }
 
-// Lateralidad del hormigueo
-const lateralidadHormigueoField = document.querySelector('#lateralidadhormigueo');
-if (lateralidadHormigueoField) {
-    data.lateralidad_hormigueo = lateralidadHormigueoField.value || "";
-}
+    // Lateralidad del hormigueo
+    const lateralidadHormigueoField = document.querySelector('#lateralidadhormigueo');
+    if (lateralidadHormigueoField) {
+        data.lateralidad_hormigueo = lateralidadHormigueoField.value || "";
+    }
 
 
-// Manejo de los datos de síntomas de entumecimiento
-data.presenta_entumecimiento = document.querySelector('#entumecimiento')?.value || "";
+    // Manejo de los datos de síntomas de entumecimiento
+    data.presenta_entumecimiento = document.querySelector('#entumecimiento')?.value || "";
 
-// Localización del entumecimiento
-const localizacionEntumecimientoField = document.querySelector('#localizacionentumecimiento');
-data.localizacion_entumecimiento = localizacionEntumecimientoField ? localizacionEntumecimientoField.value || "" : "";
+    // Localización del entumecimiento
+    const localizacionEntumecimientoField = document.querySelector('#localizacionentumecimiento');
+    data.localizacion_entumecimiento = localizacionEntumecimientoField ? localizacionEntumecimientoField.value || "" : "";
 
-// Intensidad del entumecimiento
-const intensidadEntumecimientoField = document.querySelector('#intensidadentumecimiento');
-data.intensidad_entumecimiento = intensidadEntumecimientoField ? intensidadEntumecimientoField.value || "" : "";
+    // Intensidad del entumecimiento
+    const intensidadEntumecimientoField = document.querySelector('#intensidadentumecimiento');
+    data.intensidad_entumecimiento = intensidadEntumecimientoField ? intensidadEntumecimientoField.value || "" : "";
 
-// Compromiso del entumecimiento
-const compromisoEntumecimientoField = document.querySelector('#compromisoentumecimiento');
-data.compromiso_entumecimiento = compromisoEntumecimientoField ? compromisoEntumecimientoField.value || "" : "";
+    // Compromiso del entumecimiento
+    const compromisoEntumecimientoField = document.querySelector('#compromisoentumecimiento');
+    data.compromiso_entumecimiento = compromisoEntumecimientoField ? compromisoEntumecimientoField.value || "" : "";
 
-// Lateralidad del entumecimiento
-const lateralidadEntumecimientoField = document.querySelector('#lateralidadentumecimiento');
-data.lateralidad_entumecimiento = lateralidadEntumecimientoField ? lateralidadEntumecimientoField.value || "" : "";
+    // Lateralidad del entumecimiento
+    const lateralidadEntumecimientoField = document.querySelector('#lateralidadentumecimiento');
+    data.lateralidad_entumecimiento = lateralidadEntumecimientoField ? lateralidadEntumecimientoField.value || "" : "";
 
-// Manejo de los datos de pérdida de sensibilidad
-data.presenta_perdida_sensibilidad = document.querySelector('#sensitivityLoss')?.value || "";
+    // Manejo de los datos de pérdida de sensibilidad
+    data.presenta_perdida_sensibilidad = document.querySelector('#sensitivityLoss')?.value || "";
 
-// Localización de la pérdida de sensibilidad
-const localizacionPerdidaSensibilidadField = document.querySelector('#sensitivityLossLocation');
-data.localizacion_perdida_sensibilidad = localizacionPerdidaSensibilidadField ? localizacionPerdidaSensibilidadField.value || "" : "";
+    // Localización de la pérdida de sensibilidad
+    const localizacionPerdidaSensibilidadField = document.querySelector('#sensitivityLossLocation');
+    data.localizacion_perdida_sensibilidad = localizacionPerdidaSensibilidadField ? localizacionPerdidaSensibilidadField.value || "" : "";
 
-// Intensidad de la pérdida de sensibilidad
-const intensidadPerdidaSensibilidadField = document.querySelector('#sensitivityLossIntensity');
-data.intensidad_perdida_sensibilidad = intensidadPerdidaSensibilidadField ? intensidadPerdidaSensibilidadField.value || "" : "";
+    // Intensidad de la pérdida de sensibilidad
+    const intensidadPerdidaSensibilidadField = document.querySelector('#sensitivityLossIntensity');
+    data.intensidad_perdida_sensibilidad = intensidadPerdidaSensibilidadField ? intensidadPerdidaSensibilidadField.value || "" : "";
 
-// Tipo de compromiso de la pérdida de sensibilidad
-const compromisoPerdidaSensibilidadField = document.querySelector('#sensitivityLossLocationType');
-data.compromiso_perdida_sensibilidad = compromisoPerdidaSensibilidadField ? compromisoPerdidaSensibilidadField.value || "" : "";
+    // Tipo de compromiso de la pérdida de sensibilidad
+    const compromisoPerdidaSensibilidadField = document.querySelector('#sensitivityLossLocationType');
+    data.compromiso_perdida_sensibilidad = compromisoPerdidaSensibilidadField ? compromisoPerdidaSensibilidadField.value || "" : "";
 
-// Lateralidad de la pérdida de sensibilidad
-const lateralidadPerdidaSensibilidadField = document.querySelector('#sensitivityLossSymmetry');
-data.lateralidad_perdida_sensibilidad = lateralidadPerdidaSensibilidadField ? lateralidadPerdidaSensibilidadField.value || "" : "";
+    // Lateralidad de la pérdida de sensibilidad
+    const lateralidadPerdidaSensibilidadField = document.querySelector('#sensitivityLossSymmetry');
+    data.lateralidad_perdida_sensibilidad = lateralidadPerdidaSensibilidadField ? lateralidadPerdidaSensibilidadField.value || "" : "";
 
-// Verificación de los datos
-console.log("Datos enviados:", data);
+    // Verificación de los datos
+    console.log("Datos enviados:", data);
 
 
     try {
@@ -1269,47 +1167,34 @@ const handleDiabetesTypeChange = () => {
     }
 };
 
-// Mostrar u ocultar la sección según el valor del <select> retinopatia
-function toggleRetinopathySection() {
-    const selectElement = document.querySelector('#diabeticRetinopathy');
-    const retinopathySection = document.querySelector('#retinopathySection');
-    if (selectElement && retinopathySection) {
+// Función genérica para mostrar/ocultar secciones
+function toggleSection(selectId, sectionId) {
+    const selectElement = document.getElementById(selectId);
+    const sectionElement = document.getElementById(sectionId);
+
+    if (selectElement && sectionElement) {
         if (selectElement.value === 'si') {
-            retinopathySection.classList.remove('hidden');
+            sectionElement.classList.remove('hidden');
         } else {
-            retinopathySection.classList.add('hidden');
+            sectionElement.classList.add('hidden');
         }
     }
 }
 
-// Mostrar u ocultar la sección según el valor del <select> diabeticNephropathy
-function toggleDolorSection() {
-    const selectElement = document.querySelector('#diabeticNephropathy');
-    const toggleDolorSection = document.querySelector('#nephropathySection');
-    if (selectElement && toggleDolorSection) {
-        if (selectElement.value === 'si') {
-            toggleDolorSection.classList.remove('hidden');
-        } else {
-            toggleDolorSection.classList.add('hidden');
-        }
+// Inicializa el evento de cambio para el select
+function initializeToggleSection(selectId, sectionId) {
+    const selectElement = document.getElementById(selectId);
+    if (selectElement) {
+        toggleSection(selectId, sectionId); // Inicializar la visibilidad de la sección
+        selectElement.addEventListener('change', () => toggleSection(selectId, sectionId));
     }
 }
 
-// Mostrar u ocultar la sección según el valor del <select> diabeticNephropathy
-function toggleNephropathySection() {
-    const selectElement = document.querySelector('#diabeticNephropathy');
-    const nephropathySection = document.querySelector('#nephropathySection');
-    if (selectElement && nephropathySection) {
-        if (selectElement.value === 'si') {
-            nephropathySection.classList.remove('hidden');
-        } else {
-            nephropathySection.classList.add('hidden');
-        }
-    }
-}
+
 
 // Inicialización de eventos cuando el DOM esté completamente cargado
 document.addEventListener("DOMContentLoaded", function () {
+    // Inicialización de los botones
     document.getElementById("buscar-btn").addEventListener("click", buscarPaciente);
     document.getElementById("crear-btn").addEventListener("click", crearPaciente);
     document.getElementById("actualizar-btn").addEventListener("click", actualizarPaciente);
@@ -1318,27 +1203,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     handleDiabetesTypeChange(); // Manejo de la visibilidad del campo "observacion"
 
-    const eyeExamSelect = document.getElementById("diabeticRetinopathy");
-    if (eyeExamSelect) {
-        toggleRetinopathySection(); // Inicializar la visibilidad de la sección
-        eyeExamSelect.addEventListener('change', toggleRetinopathySection);
-    }
+    // Manejo de la visibilidad de las secciones
+    initializeToggleSection("diabeticRetinopathy", "retinopathySection");
+    initializeToggleSection("diabeticNephropathy", "nephropathySection");
+    initializeToggleSection("presentaDolor", "painDetailsTable");
+    initializeToggleSection("tingling", "tinglingDetails");
+    initializeToggleSection("entumecimiento", "numbnessDetails");
+    initializeToggleSection("sensitivityLoss", "sensitivityLossDetails");
+    initializeToggleSection("calambres", "crampsDetails");
+    initializeToggleSection("fasciculaciones", "fasciculationsDetails");
+    initializeToggleSection("disminucionFuerza", "strengthReductionDetails");
+    initializeToggleSection("otherNeuropathies", "neuropathyType");
+    initializeToggleSection("piediabetico", "footSection");
 
-    // Inicializar la visibilidad de la sección de nefropatía
-    const nephropathySelect = document.getElementById("diabeticNephropathy");
-    if (nephropathySelect) {
-        toggleNephropathySection(); // Inicializar la visibilidad de la sección
-        nephropathySelect.addEventListener('change', toggleNephropathySection);
-    }
 });
-
-
-// Inicializar la visibilidad de la sección de síntomas sensoriales
-const sensorySymptomsSelect = document.getElementById("sensorySymptoms");
-if (sensorySymptomsSelect) {
-    toggleSensorySymptomsSection(); // Inicializar la visibilidad de la sección
-    sensorySymptomsSelect.addEventListener('change', toggleSensorySymptomsSection);
-}
-
-
-
