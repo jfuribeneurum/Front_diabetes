@@ -163,129 +163,129 @@ async function buscarPaciente() {
             }
 
             // Función genérica para establecer el valor de un campo
-const setFieldValue = (selector, value, formatFn = null) => {
-    const field = document.querySelector(selector);
-    if (field) {
-        field.value = formatFn ? formatFn(value) : value || "";
-    } else {
-        console.error(`Elemento con id "${selector}" no encontrado.`);
-    }
-};
+            const setFieldValue = (selector, value, formatFn = null) => {
+                const field = document.querySelector(selector);
+                if (field) {
+                    field.value = formatFn ? formatFn(value) : value || "";
+                } else {
+                    console.error(`Elemento con id "${selector}" no encontrado.`);
+                }
+            };
 
-// Función genérica para seleccionar la opción correcta en un campo select
-const setSelectOption = (selector, value) => {
-    const selectField = document.querySelector(selector);
-    if (selectField) {
-        const options = selectField.options;
-        for (let i = 0; i < options.length; i++) {
-            if (options[i].text.toLowerCase() === value.toLowerCase()) {
-                selectField.value = options[i].value;
-                break;
-            }
-        }
-    } else {
-        console.error(`Elemento con id "${selector}" no encontrado.`);
-    }
-};
+            // Función genérica para seleccionar la opción correcta en un campo select
+            const setSelectOption = (selector, value) => {
+                const selectField = document.querySelector(selector);
+                if (selectField) {
+                    const options = selectField.options;
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i].text.toLowerCase() === value.toLowerCase()) {
+                            selectField.value = options[i].value;
+                            break;
+                        }
+                    }
+                } else {
+                    console.error(`Elemento con id "${selector}" no encontrado.`);
+                }
+            };
 
-// Función para inicializar los datos en campos de texto y select
-const initializeDataFields = (dataFields) => {
-    dataFields.forEach(({ type, selector, value, formatFn }) => {
-        if (type === "text") {
-            setFieldValue(selector, value, formatFn);
-        } else if (type === "select") {
-            setSelectOption(selector, value);
-        }
-    });
-};
+            // Función para inicializar los datos en campos de texto y select
+            const initializeDataFields = (dataFields) => {
+                dataFields.forEach(({ type, selector, value, formatFn }) => {
+                    if (type === "text") {
+                        setFieldValue(selector, value, formatFn);
+                    } else if (type === "select") {
+                        setSelectOption(selector, value);
+                    }
+                });
+            };
 
-// Función para mostrar u ocultar secciones
-const initializeSections = () => {
-    initializeToggleSection("diabeticRetinopathy", "retinopathySection");
-    initializeToggleSection("diabeticNephropathy", "nephropathySection");
-    initializeToggleSection("presentaDolor", "painDetailsTable");
-    initializeToggleSection("tingling", "tinglingDetails");
-    initializeToggleSection("entumecimiento", "numbnessDetails");
-    initializeToggleSection("sensitivityLoss", "sensitivityLossDetails");
-};
-
-
-// Datos para retinopatía
-const retinopathyFields = [
-    { type: "text", selector: '#consultationDate', value: data.fecha_consulta, formatFn: formatDate },
-    { type: "text", selector: '#lastEyeExamDate', value: data.fecha_ultima_evaluacion, formatFn: formatDate },
-    { type: "select", selector: '[name="retinopathyDiagnosis"]', value: data.dx_retinopatia },
-    { type: "text", selector: '#edemaMacular', value: data.edema_macular },
-    { type: "text", selector: '#diabeticRetinopathy', value: data.tiene_evaluacion_oftalmologica }
-];
-
-// Datos para nefropatía
-const nephropathyFields = [
-    { type: "text", selector: '#diabeticNephropathy', value: data.tiene_nefropatia },
-    { type: "text", selector: '#transplant', value: data.trasplante },
-    { type: "text", selector: '#creatinine', value: data.creatinina },
-    { type: "text", selector: '#tfg', value: data.tfg },
-    { type: "text", selector: '#albuminuria', value: data.albuminuria },
-    { type: "text", selector: '#classification', value: data.clasificacion },
-    { type: "select", selector: '#trr', value: data.trr }
-];
-
-//Datos para neuropatía (corrección de nombre)
-const neuropathyFields = [
-    { type: "text", selector: '#sensorySymptoms', value: data.tiene_evaluacion_neurologica }
-];
-
-// Datos para dolor
-const painFields = [
-    { type: "text", selector: '#presentaDolor', value: data.presenta_dolor },
-    { type: "select", selector: '#localizacion', value: data.localizacion },
-    { type: "select", selector: '#intensidad', value: data.intensidad },
-    { type: "select", selector: '#compromiso_dolor', value: data.compromiso_dolor },
-    { type: "select", selector: '#lateralidad_dolor', value: data.lateralidad_dolor }
-];
-
-// Datos para hormigueo
-const tinglingFields = [
-    { type: "text", selector: '#tingling', value: data.presenta_hormigueo },
-    { type: "select", selector: '#localizacionhormigueo', value: data.localizacion_hormigueo },
-    { type: "select", selector: '#intensidadhormigueo', value: data.intensidad_hormigueo },
-    { type: "select", selector: '#compromisohormigueo', value: data.compromiso_hormigueo },
-    { type: "select", selector: '#lateralidadhormigueo', value: data.lateralidad_hormigueo }
-];
-
-// Datos para entumecimiento
-const numbnessFields = [
-    { type: "text", selector: '#entumecimiento', value: data.presenta_entumecimiento },
-    { type: "select", selector: '#localizacionentumecimiento', value: data.localizacion_entumecimiento },
-    { type: "select", selector: '#intensidadentumecimiento', value: data.intensidad_entumecimiento },
-    { type: "select", selector: '#compromisoentumecimiento', value: data.compromiso_entumecimiento },
-    { type: "select", selector: '#lateralidadentumecimiento', value: data.lateralidad_entumecimiento }
-];
+            // Función para mostrar u ocultar secciones
+            const initializeSections = () => {
+                initializeToggleSection("diabeticRetinopathy", "retinopathySection");
+                initializeToggleSection("diabeticNephropathy", "nephropathySection");
+                initializeToggleSection("presentaDolor", "painDetailsTable");
+                initializeToggleSection("tingling", "tinglingDetails");
+                initializeToggleSection("entumecimiento", "numbnessDetails");
+                initializeToggleSection("sensitivityLoss", "sensitivityLossDetails");
+            };
 
 
-// Asegúrate de que el objeto data tenga los valores correctos
-console.log("Datos iniciales:", data);
-// Datos para pérdida de sensibilidad
-const sensitivityLossFields = [
-    { type: "text", selector: '#sensitivityLoss', value: data.presenta_perdida_sensibilidad },
-    { type: "select", selector: '#sensitivityLossLocation', value: data.localizacion_perdida_sensibilidad },
-    { type: "select", selector: '#sensitivityLossIntensity', value: data.intensidad_perdida_sensibilidad },
-    { type: "select", selector: '#sensitivityLossLocationType', value: data.compromiso_perdida_sensibilidad },
-    { type: "select", selector: '#sensitivityLossSymmetry', value: data.lateralidad_perdida_sensibilidad }
-];
+            // Datos para retinopatía
+            const retinopathyFields = [
+                { type: "text", selector: '#consultationDate', value: data.fecha_consulta, formatFn: formatDate },
+                { type: "text", selector: '#lastEyeExamDate', value: data.fecha_ultima_evaluacion, formatFn: formatDate },
+                { type: "select", selector: '[name="retinopathyDiagnosis"]', value: data.dx_retinopatia },
+                { type: "text", selector: '#edemaMacular', value: data.edema_macular },
+                { type: "text", selector: '#diabeticRetinopathy', value: data.tiene_evaluacion_oftalmologica }
+            ];
 
-// Inicializar todos los campos
-initializeDataFields(retinopathyFields);
-initializeDataFields(nephropathyFields);
-initializeDataFields(neuropathyFields); // Cambio de "neuroipatiafields" a "neuropathyFields"
-initializeDataFields(painFields);
-initializeDataFields(tinglingFields);
-initializeDataFields(numbnessFields);
-initializeDataFields(sensitivityLossFields); // Agregar campos de pérdida de sensibilidad
+            // Datos para nefropatía
+            const nephropathyFields = [
+                { type: "text", selector: '#diabeticNephropathy', value: data.tiene_nefropatia },
+                { type: "text", selector: '#transplant', value: data.trasplante },
+                { type: "text", selector: '#creatinine', value: data.creatinina },
+                { type: "text", selector: '#tfg', value: data.tfg },
+                { type: "text", selector: '#albuminuria', value: data.albuminuria },
+                { type: "text", selector: '#classification', value: data.clasificacion },
+                { type: "select", selector: '#trr', value: data.trr }
+            ];
+
+            //Datos para neuropatía (corrección de nombre)
+            const neuropathyFields = [
+                { type: "text", selector: '#sensorySymptoms', value: data.tiene_evaluacion_neurologica }
+            ];
+
+            // Datos para dolor
+            const painFields = [
+                { type: "text", selector: '#presentaDolor', value: data.presenta_dolor },
+                { type: "select", selector: '#localizacion', value: data.localizacion },
+                { type: "select", selector: '#intensidad', value: data.intensidad },
+                { type: "select", selector: '#compromiso_dolor', value: data.compromiso_dolor },
+                { type: "select", selector: '#lateralidad_dolor', value: data.lateralidad_dolor }
+            ];
+
+            // Datos para hormigueo
+            const tinglingFields = [
+                { type: "text", selector: '#tingling', value: data.presenta_hormigueo },
+                { type: "select", selector: '#localizacionhormigueo', value: data.localizacion_hormigueo },
+                { type: "select", selector: '#intensidadhormigueo', value: data.intensidad_hormigueo },
+                { type: "select", selector: '#compromisohormigueo', value: data.compromiso_hormigueo },
+                { type: "select", selector: '#lateralidadhormigueo', value: data.lateralidad_hormigueo }
+            ];
+
+            // Datos para entumecimiento
+            const numbnessFields = [
+                { type: "text", selector: '#entumecimiento', value: data.presenta_entumecimiento },
+                { type: "select", selector: '#localizacionentumecimiento', value: data.localizacion_entumecimiento },
+                { type: "select", selector: '#intensidadentumecimiento', value: data.intensidad_entumecimiento },
+                { type: "select", selector: '#compromisoentumecimiento', value: data.compromiso_entumecimiento },
+                { type: "select", selector: '#lateralidadentumecimiento', value: data.lateralidad_entumecimiento }
+            ];
 
 
-// Inicializar secciones
-initializeSections();
+            // Asegúrate de que el objeto data tenga los valores correctos
+            console.log("Datos iniciales:", data);
+            // Datos para pérdida de sensibilidad
+            const sensitivityLossFields = [
+                { type: "text", selector: '#sensitivityLoss', value: data.presenta_perdida_sensibilidad },
+                { type: "select", selector: '#sensitivityLossLocation', value: data.localizacion_perdida_sensibilidad },
+                { type: "select", selector: '#sensitivityLossIntensity', value: data.intensidad_perdida_sensibilidad },
+                { type: "select", selector: '#sensitivityLossLocationType', value: data.compromiso_perdida_sensibilidad },
+                { type: "select", selector: '#sensitivityLossSymmetry', value: data.lateralidad_perdida_sensibilidad }
+            ];
+
+            // Inicializar todos los campos
+            initializeDataFields(retinopathyFields);
+            initializeDataFields(nephropathyFields);
+            initializeDataFields(neuropathyFields); // Cambio de "neuroipatiafields" a "neuropathyFields"
+            initializeDataFields(painFields);
+            initializeDataFields(tinglingFields);
+            initializeDataFields(numbnessFields);
+            initializeDataFields(sensitivityLossFields); // Agregar campos de pérdida de sensibilidad
+
+
+            // Inicializar secciones
+            initializeSections();
 
 
 
@@ -724,6 +724,189 @@ initializeSections();
             }
 
 
+            // Sección Comorbilidades
+            const comorbilidadField = document.querySelector('#nombreComorbilidad');
+            if (comorbilidadField) {
+                comorbilidadField.value = data.nombre_comorbilidad || "";
+            } else {
+                console.error('Elemento con id "nombreComorbilidad" no encontrado.');
+            }
+
+            const fechaComorbilidadField = document.querySelector('#fechaComorbilidad');
+            if (fechaComorbilidadField) {
+                fechaComorbilidadField.value = data.fecha_consulta_comorbilidad || "";
+            } else {
+                console.error('Elemento con id "fechaComorbilidad" no encontrado.');
+            }
+
+            // Sección insulina
+            const insulinaField = document.querySelector('#insulina');
+            if (insulinaField) {
+                if (data.recibe_insulina === "si" || data.recibe_insulina === "no") {
+                    insulinaField.value = data.recibe_insulina;
+                } else {
+                    insulinaField.value = ""; 
+                }
+            } else {
+                console.error('Elemento con id "insulina" no encontrado.');
+            }
+
+
+
+            // Sección Bombas de insulina
+            const bombaField = document.querySelector('#Bombainsulina');
+            if (bombaField) {
+                if (data.tiene_bomba_insulina === "si" || data.tiene_bomba_insulina === "no") {
+                    bombaField.value = data.tiene_bomba_insulina;
+                } else {
+                    bombaField.value = ""; // Valor por defecto si no es "si" o "no"
+                }
+            } else {
+                console.error('Elemento con id "Bombainsulina" no encontrado.');
+            }
+
+
+            const modeloactualField = document.querySelector('#modelo');
+            if (modeloactualField) {
+                modeloactualField.value = data.modelo_actual || "";
+            } else {
+                console.error('Elemento con id "nombremodeloactual" no encontrado.');
+            }
+
+            const fechainstalacionField = document.querySelector('#instalacionDate');
+            if (fechainstalacionField) {
+                fechainstalacionField.value = data.fecha_instalacion_modelo || "";
+            } else {
+                console.error('Elemento con id "fecha_instalacion" no encontrado.');
+            }
+
+
+            const otrosmodelosField = document.querySelector('#otrosModelos');
+            if (otrosmodelosField) {
+                if (data.ha_tenido_otros_modelos === "si" || data.ha_tenido_otros_modelos === "no") {
+                    otrosmodelosField.value = data.ha_tenido_otros_modelos;
+                } else {
+                    otrosmodelosField.value = ""; // Valor por defecto si no es "si" o "no"
+                }
+            } else {
+                console.error('Elemento con id "ha_tenido_otros_modelos" no encontrado.');
+            }
+
+
+            const fechainstalacionprimeraField = document.querySelector('#primeraInstalacionDate');
+            if (fechainstalacionprimeraField) {
+                fechainstalacionprimeraField.value = data.fecha_instalacion_primera_bomba || "";
+            } else {
+                console.error('Elemento con id "fecha_instalacion" no encontrado.');
+            }
+
+
+            const indicacionField = document.querySelector('#indicacion');
+            if (indicacionField) {
+                const opciones = indicacionField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === (data.indicacion || "").trim().toLowerCase()) {
+                        indicacionField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "indicacionField" no encontrado.');
+            }
+
+
+            const analogoinField = document.querySelector('#analogoin');
+            if (analogoinField) {
+                const opciones = analogoinField.options;
+                for (let i = 0; i < opciones.length; i++) {
+                    if (opciones[i].text.trim().toLowerCase() === (data.analogoin || "").trim().toLowerCase()) {
+                        analogoinField.value = opciones[i].value;
+                        break;
+                    }
+                }
+            } else {
+                console.error('Elemento con id "indicacionField" no encontrado.');
+            }
+
+
+            // Sección insulina basal
+            const insulinabasalField = document.querySelector('#insulinaBasal');
+            if (insulinabasalField) {
+                if (data.recibe_insulina_basal=== "si" || data.recibe_insulina_basal === "no") {
+                    insulinabasalField.value = data.recibe_insulina_basal;
+                } else {
+                    insulinabasalField.value = ""; // Valor por defecto si no es "si" o "no"
+                }
+            } else {
+                console.error('Elemento con id "insulinabasalField" no encontrado.');
+            }
+
+
+            // Asignar valor a la fecha
+const fechaField = document.querySelector('#consultationDateinsu');
+if (fechaField) {
+    fechaField.value = data.fecha_insulina || "";
+} else {
+    console.error('Elemento con id "consultationDateinsu" no encontrado.');
+}
+
+// Asignar valor al tipo de insulina
+const tipoInsulinaField = document.querySelector('#tipoInsulina');
+if (tipoInsulinaField) {
+    const opciones = tipoInsulinaField.options;
+    for (let i = 0; i < opciones.length; i++) {
+        if (opciones[i].text.trim().toLowerCase() === (data.tipo_insulina || "").trim().toLowerCase()) {
+            tipoInsulinaField.value = opciones[i].value;
+            break;
+        }
+    }
+} else {
+    console.error('Elemento con id "tipoInsulina" no encontrado.');
+}
+
+// Asignar valor a unidades por día
+const unidadesDiaField = document.querySelector('#unidadesDia');
+if (unidadesDiaField) {
+    unidadesDiaField.value = data.unidades_dia || 0; // Usar 0 si no hay valor
+} else {
+    console.error('Elemento con id "unidadesDia" no encontrado.');
+}
+
+// Asignar valor a dosis #1
+const dosis1Field = document.querySelector('#dosis1');
+if (dosis1Field) {
+    dosis1Field.value = data.dosis1 || 0; // Usar 0 si no hay valor
+} else {
+    console.error('Elemento con id "dosis1" no encontrado.');
+}
+
+// Asignar valor a dosis #2
+const dosis2Field = document.querySelector('#dosis2');
+if (dosis2Field) {
+    dosis2Field.value = data.dosis2 || 0; // Usar 0 si no hay valor
+} else {
+    console.error('Elemento con id "dosis2" no encontrado.');
+}
+
+// Asignar valor a dosis #3
+const dosis3Field = document.querySelector('#dosis3');
+if (dosis3Field) {
+    dosis3Field.value = data.dosis3 || 0; // Usar 0 si no hay valor
+} else {
+    console.error('Elemento con id "dosis3" no encontrado.');
+}
+
+
+
+
+           
+
+
+
+
+
+
+
             // Calcular y mostrar la edad
             if (data.fecha_nacimiento) {
                 const { anios, meses } = calcularEdad(data.fecha_nacimiento);
@@ -1138,5 +1321,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeToggleSection("disminucionFuerza", "strengthReductionDetails");
     initializeToggleSection("otherNeuropathies", "neuropathyType");
     initializeToggleSection("piediabetico", "footSection");
+
+    
 
 });

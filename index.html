@@ -1087,6 +1087,7 @@
                         </tbody>
                     </table>
                     <button id="agregarFila" type="button">Agregar Comorbilidad</button>
+
             </fieldset>
 
 
@@ -1120,124 +1121,108 @@
                                 <th></th>
                                 <th>Medicamento</th>
                                 <th>Dosis</th>
+                                <th>presentacion</th>
                                 <th>Via</th>
-                                <th>Cada</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th>Temporalidad</th>
                                 <th>Desde</th>
                                 <th>Hasta</th>
                                 <th>Adherencia</th>
                                 <th>Causa abandono</th>
-                                <th class="observacion-column-title">Observación</th>
+                                <th>Observación</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><input type="checkbox" id="genericCheckbox" name="genericCheckbox"></td>
-                                <select id="agentesorales" name="agentesorales" required>
-                                    <option value="">Seleccione...</option>
-                                    <option value="acido_fenofibrico_rosuvastatina_135_20">ACIDO FENOFIBRICO 135 MG
-                                        + ROSUVASTATINA 20 MG</option>
-                                    <option value="acido_salicilico_100">ACIDO SALICILICO 100 MG</option>
-                                    <option value="amlodipina_10">AMLODIPINA 10 MG TABLETA</option>
-                                    <option value="amlodipina_5">AMLODIPINA 5 MG TABLETA</option>
-                                    <option value="atorvastatina_20">ATORVASTATINA 20 MG</option>
-                                    <option value="atorvastatina_20_ezetimibe_10">ATORVASTATINA 20 MG + EZETIMIBE 10
-                                        MG</option>
-                                    <option value="atorvastatina_40">ATORVASTATINA 40 MG</option>
-                                    <option value="atorvastatina_40_ezetimibe_10">ATORVASTATINA 40 MG + EZETIMIBE 10
-                                        MG</option>
-                                    <option value="atorvastatina_80">ATORVASTATINA 80 MG</option>
-                                    <option value="bisoprolol_10">BISOPROLOL 10 MG TABLETA</option>
-                                </select>
-                                </td>
-                                <td class="form-field"><input type="number" name="AD" min="0" max="1000" step="1"
-                                        required>
-                                </td>
-                                <td><select>
-                                        <option value="">Seleccione...</option>
-                                        <option value="order">Oral</option>
-                                        <option value="administrative">Subcutanea</option>
-                                        <option value="administrative">Intravenosa</option>
-                                    </select>
-                                </td>
-                                <td>Cada</td>
                                 <td>
-                                    <select name="cantidadHoras" id="cantidadHoras" required>
+                                    <select id="agentesorales" name="agentesorales" required>
                                         <option value="">Seleccione...</option>
+                                        <option value="acido_fenofibrico_rosuvastatina_135_20">ACIDO FENOFIBRICO 135 MG
+                                            + ROSUVASTATINA 20 MG</option>
+                                        <option value="acido_salicilico_100">ACIDO SALICILICO 100 MG</option>
+                                        <option value="amlodipina_10">AMLODIPINA 10 MG TABLETA</option>
+                                        <option value="amlodipina_5">AMLODIPINA 5 MG TABLETA</option>
+                                        <option value="atorvastatina_20">ATORVASTATINA 20 MG</option>
+                                        <option value="atorvastatina_20_ezetimibe_10">ATORVASTATINA 20 MG + EZETIMIBE 10
+                                            MG</option>
+                                        <option value="atorvastatina_40">ATORVASTATINA 40 MG</option>
+                                        <option value="atorvastatina_40_ezetimibe_10">ATORVASTATINA 40 MG + EZETIMIBE 10
+                                            MG</option>
+                                        <option value="atorvastatina_80">ATORVASTATINA 80 MG</option>
+                                        <option value="bisoprolol_10">BISOPROLOL 10 MG TABLETA</option>
                                     </select>
                                 </td>
-                                <td>Durante</td>
-                                <td class="form-field"><input type="number" name="AD" min="0" max="1000" step="1"
-                                        required>
-                                </td>
-                                <td><select>
-                                        <option value="">Seleccione...</option>
-                                        <option value="order">Dias</option>
-                                        <option value="administrative">Semanas</option>
-                                        <option value="patient">Meses</option>
-                                    </select>
-                                </td>
-                                <td class="form-field"><input type="date" id="consultationDate" name="consultationDate"
-                                        required></td>
-                                <td class="form-field"><input type="date" id="consultationDate" name="consultationDate"
-                                        required></td>
+                                <td><input type="number" name="dosis" min="0" max="1000" step="1" required></td>
                                 <td>
-                                    <select class="select-option">
-                                        <option value="yes">Sí</option>
+                                    <select id="agentesorales" name="agentesorales" required>
+                                        <option value="">Seleccione...</option>
+                                        <option value="1">presentacion 1</option>
+                                        <option value="2">presentacion 2</option>
+                                        <option value="3">presentacion 3</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="via" required>
+                                        <option value="">Seleccione...</option>
+                                        <option value="oral">Oral</option>
+                                        <option value="subcutanea">Subcutánea</option>
+                                        <option value="intravenosa">Intravenosa</option>
+                                    </select>
+                                </td>
+                                <td><input type="date" id="desde" name="desde" required></td>
+                                <td><input type="date" id="hasta" name="hasta" required></td>
+                                <td>
+                                    <select name="adherencia" required>
+                                        <option value="si">Sí</option>
                                         <option value="no">No</option>
                                     </select>
                                 </td>
-
                                 <td>
-                                    <select class="select-option causa-abandono">
+                                    <select name="causa_abandono" class="causa-abandono">
                                         <option value="">Seleccione...</option>
-                                        <option value="order">Orden Médica</option>
-                                        <option value="administrative">Administrativo</option>
-                                        <option value="patient">Decisión paciente</option>
-                                        <option value="adverse_event">Evento adverso</option>
+                                        <option value="orden_medica">Orden Médica</option>
+                                        <option value="administrativo">Administrativo</option>
+                                        <option value="decision_paciente">Decisión Paciente</option>
+                                        <option value="evento_adverso">Evento Adverso</option>
                                     </select>
                                 </td>
-                                <td class="observacion-column">
-                                    <input type="text" name="observacion" placeholder="Escriba la observación">
-                                </td>
+                                <td><input type="text" name="observacion" placeholder="Escriba la observación"></td>
                             </tr>
                         </tbody>
                     </table>
+
                     <div class="botonesmedi">
-                        <button type="submit" id="addRowBtn" class="addmedi">Agregar</button>
-                        <button type="submit" class="addmedi">Editar</button>
+                        <button type="button" id="addRowBtn" class="addmedi">Agregar</button>
+                        <button type="button" id="editRowBtn" class="addmedi">Editar</button>
                     </div>
                     <p><u>Si = el paciente es adherente + del 80%</u></p>
                 </div>
 
+
                 <div>
                     <h2>Insulina</h2>
                     <div class="form-field">
-                        <label for="insulina1">¿El paciente actualmente recibe insulina?</label>
-                        <select id="insulina1" class="select-option" name="insulina1" onchange="toggleInsulinDetails()">
+                        <label for="insulina">¿El paciente actualmente recibe insulina?</label>
+                        <select id="insulina" class="select-option" name="insulina">
                             <option value="">Seleccione...</option>
-                            <option value="yes">Sí</option>
+                            <option value="si">Sí</option>
                             <option value="no">No</option>
                         </select>
                     </div>
                 </div>
 
-                <div id="insulin-details" class="hidden insulin-details">
+
+                <div id="insulin-details">
                     <h2>Bombas de insulina</h2>
                     <div class="form-field">
                         <label for="Bombainsulina">¿El paciente actualmente tiene bomba de insulina?</label>
-                        <select id="Bombainsulina" class="select-option" name="Bombainsulina"
-                            onchange="toggleInsulinPumpFields()">
+                        <select id="Bombainsulina" class="select-option" name="Bombainsulina">
                             <option value="">Seleccione...</option>
-                            <option value="yes">Sí</option>
+                            <option value="si">Sí</option>
                             <option value="no">No</option>
                         </select>
                     </div>
 
-                    <div id="insulinPumpFields" style="display: none;">
+                    <div id="insulinPumpFields">
                         <div class="form-field">
                             <label for="modelo">Modelo actual:</label>
                             <select id="modelo" class="select-option" name="modelo">
@@ -1256,15 +1241,14 @@
 
                         <div class="form-field">
                             <label for="otrosModelos">¿Ha tenido otros modelos de bombas?</label>
-                            <select id="otrosModelos" class="select-option" name="otrosModelos"
-                                onchange="toggleOtherPumpFields()">
+                            <select id="otrosModelos" class="select-option" name="otrosModelos">
                                 <option value="">Seleccione...</option>
-                                <option value="yes">Sí</option>
+                                <option value="si">Sí</option>
                                 <option value="no">No</option>
                             </select>
                         </div>
 
-                        <div id="otherPumpFields" style="display: none;">
+                        <div id="otherPumpFields">
                             <div class="form-field">
                                 <label for="primeraInstalacionDate">Fecha de instalación primera bomba:</label>
                                 <input type="date" id="primeraInstalacionDate" name="primeraInstalacionDate">
@@ -1275,11 +1259,11 @@
                             <label for="indicacion">Indicación:</label>
                             <select id="indicacion" class="select-option" name="indicacion">
                                 <option value="">Seleccione...</option>
-                                <option value="Mal control glucémico">Mal control glucémico</option>
-                                <option value="Fenómeno del alba">Fenómeno del alba</option>
-                                <option value="Hipoglucemias frecuentes">Hipoglucemias frecuentes</option>
-                                <option value="Gastroparesia diabética">Gastroparesia diabética</option>
-                                <option value="Otros">Otros</option>
+                                <option value="1">Mal control glucémico</option>
+                                <option value="2">Fenómeno del alba</option>
+                                <option value="3">Hipoglucemias frecuentes</option>
+                                <option value="4">Gastroparesia diabética</option>
+                                <option value="5">Otros</option>
                             </select>
                         </div>
 
@@ -1288,116 +1272,73 @@
                             <label for="analogoin">Análogo de insulina utilizada:</label>
                             <select id="analogoin" class="select-option" name="analogoin">
                                 <option value="">Seleccione...</option>
-                                <option value="Regular">Regular</option>
-                                <option value="Aspart">Aspart</option>
-                                <option value="Lispro">Lispro</option>
-                                <option value="Glulisina">Glulisina</option>
+                                <option value="1">Regular</option>
+                                <option value="2">Aspart</option>
+                                <option value="3">Lispro</option>
+                                <option value="4">Glulisina</option>
                             </select>
                         </div>
-
-
                     </div>
-
-                    <script>
-                        function toggleInsulinPumpFields() {
-                            const insulinPump = document.getElementById('Bombainsulina').value;
-                            const insulinPumpFields = document.getElementById('insulinPumpFields');
-                            insulinPumpFields.style.display = insulinPump === 'yes' ? 'block' : 'none';
-                        }
-
-                        function toggleOtherPumpFields() {
-                            const otrosModelos = document.getElementById('otrosModelos').value;
-                            const otherPumpFields = document.getElementById('otherPumpFields');
-                            otherPumpFields.style.display = otrosModelos === 'yes' ? 'block' : 'none';
-                        }
-                    </script>
-
-                    <!--<div class="form-field">
-                        <label for="tiempoActivo">Tiempo de insulina activa (horas):</label>
-                        <input type="number" name="AD" min="0" max="1000" step="1" required>
-                    </div>
-                    
-                    <div class="form-field">
-                        <label for="obstruccionCateter">¿Obstrucción del catéter?:</label>
-                        <select id="obstruccionCateter" class="select-option" name="obstruccionCateter" onchange="toggleCateterObstructionFields()">
-                            <option value="">Seleccione...</option>
-                            <option value="yes">Sí</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div> 
-                    
-                    <div id="cateterObstructionFields" style="display: none;">
-                        <div class="form-field">
-                            <label for="numObstrucciones">Número de obstrucciones:</label>
-                            <input type="number" id="numObstrucciones" name="numObstrucciones" placeholder="Pendiente definir tipo de dato" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-field">
-                        <label for="alergiaSensor">¿Alergia al sensor?:</label>
-                        <select id="obstruccionCateter" class="select-option" name="obstruccionCateter" onchange="toggleCateterObstructionFields()">
-                            <option value="">Seleccione...</option>
-                            <option value="yes">Sí</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>-->
                 </div>
 
 
-                <h2>Basal</h2>
+                <h2 id="insulinaBasalHeading">Insulina Basal</h2>
                 <div class="form-field insulina-label">
-                    <label for="insulina" class="insulina">¿El paciente actualmente está recibiendo insulina
+                    <label for="insulinaBasalSelect" class="insulina">¿El paciente actualmente está recibiendo insulina
                         Basal?</label>
-                    <select id="insulina" name="insulina" required>
+                    <select id="insulinaBasal" name="insulinaBasal" required>
                         <option value="">Seleccione...</option>
-                        <option value="siinsulina">SI</option>
-                        <option value="noinsulina">NO</option>
+                        <option value="si">SI</option>
+                        <option value="no">NO</option>
                     </select>
                 </div>
 
-                <div id="tablainsulina" style="display: none;">
+                <div id="tablainsulina">
                     <table class="styled-table">
                         <thead>
                             <tr>
-                                <th>Fecha</th>
-                                <th>Tipo</th>
-                                <th>Unidades dia</th>
-                                <th>Dosis #1</th>
-                                <th>Dosis #2/th>
-                                <th>Dosis #3/th>
+                                <th id="fechaHeader">Fecha</th>
+                                <th id="tipoHeader">Tipo</th>
+                                <th id="unidadesHeader">Unidades día</th>
+                                <th id="dosis1Header">Dosis #1</th>
+                                <th id="dosis2Header">Dosis #2</th>
+                                <th id="dosis3Header">Dosis #3</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="form-field"><input type="date" id="consultationDate" name="consultationDate"
-                                        required></td>
-                                <td class="form-field"><select id="insulinaBasal" class="form-field">
+                            <tr id="insulinaRow">
+                                <td class="form-field">
+                                    <input type="date" id="consultationDateinsu" name="consultationDate" required>
+                                </td>
+                                <td class="form-field">
+                                    <select id="tipoInsulina" name="tipoInsulina" required>
                                         <option value="">Seleccione...</option>
-                                        <option value="detemir">detemir</option>
-                                        <option value="glargina">glargina</option>
-                                        <option value="Glargina_biosimilar">Glargina biosimilar</option>
-                                        <option value="Glargina_biosimilar">glargina U-300</option>
-                                        <option value="Glargina_biosimilar">degludec</option>
-                                        <option value="Glargina_biosimilar">NPH</option>
+                                        <option value="1">Detemir</option>
+                                        <option value="2">Glargina</option>
+                                        <option value="3">Glargina biosimilar</option>
+                                        <option value="4">Glargina U-300</option>
+                                        <option value="5">Degludec</option>
+                                        <option value="6">NPH</option>
                                     </select>
                                 </td>
-                                <td class="form-field"><input type="number" name="DD" min="0" max="1000" step="1"
+                                <td class="form-field">
+                                    <input type="number" id="unidadesDia" name="unidadesDia" min="0" max="1000" step="1"
                                         required>
                                 </td>
-                                <td class="form-field"><input type="number" name="DD" min="0" max="1000" step="1"
-                                        required>
+                                <td class="form-field">
+                                    <input type="number" id="dosis1" name="dosis1" min="0" max="1000" step="1" required>
                                 </td>
-                                <td class="form-field"><input type="number" name="AA" min="0" max="1000" step="1"
-                                        required>
+                                <td class="form-field">
+                                    <input type="number" id="dosis2" name="dosis2" min="0" max="1000" step="1" required>
                                 </td>
-                                <td class="form-field"><input type="number" name="DA" min="0" max="1000" step="1"
-                                        required>
+                                <td class="form-field">
+                                    <input type="number" id="dosis3" name="dosis3" min="0" max="1000" step="1" required>
                                 </td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>
+
 
                 <br>
                 <br>
@@ -1413,17 +1354,16 @@
                 </div>
                 <br>
                 <br>
-                <div class="form-field insulinaPrandial-label" id="estrategiaNutricional" style="display: none;">
+                <div class="form-field insulinaPrandial-label" id="estrategiaNutricional">
 
                     <div class="form-field">
                         <label for="insulinaPrandialSelect" class="insulinaPrandial">Tipo de estrategia
                             nutricional</label>
-                        <select id="insulinaPrandialSelect" name="insulinaPrandial" required
-                            onchange="toggleInsulinPrandialTables()">
+                        <select id="insulinaPrandialSelect" name="insulinaPrandial" required>
                             <option value="">Seleccione...</option>
-                            <option value="fija">Fija</option>
-                            <option value="basica">Básica</option>
-                            <option value="conteo">Conteo</option>
+                            <option value="1">Fija</option>
+                            <option value="2">Básica</option>
+                            <option value="3">Conteo</option>
                         </select>
                     </div>
                     <br>
@@ -1431,12 +1371,12 @@
                         <label for="typeinsulina">Tipo de insulina:</label>
                         <select id="typeinsulina" class="form-field">
                             <option value="">Seleccione...</option>
-                            <option value="ultrarrapidos">Análogos ultrarrápidos</option>
-                            <option value="rapida">Insulina rápida</option>
+                            <option value="1">Análogos ultrarrápidos</option>
+                            <option value="2">Insulina rápida</option>
                         </select>
                     </div>
 
-                    <div class="form-field insulinaPrandial-label" id="insulinaPrandialTabla" style="display: none;">
+                    <div class="form-field insulinaPrandial-label" id="insulinaPrandialTabla">
                         <table class="styled-table">
                             <thead>
                                 <tr>
@@ -1457,8 +1397,8 @@
                                     <td><input type="date" id="consultationDate1" name="consultationDate" required></td>
                                     <td><select class="form-field">
                                             <option value="">Seleccione...</option>
-                                            <option value="adecuada">Adecuada</option>
-                                            <option value="inadecuada">Inadecuada</option>
+                                            <option value="1">Adecuada</option>
+                                            <option value="2">Inadecuada</option>
                                         </select></td>
                                     <td><select class="form-field">
                                             <option value="">Seleccione...</option>
@@ -1468,9 +1408,9 @@
                                     <td>
                                         <select class="select-option">
                                             <option value="">Seleccione...</option>
-                                            <option value="pre">Preprandial</option>
-                                            <option value="post">Postprandial</option>
-                                            <option value="post">Ambas</option>
+                                            <option value="1">Preprandial</option>
+                                            <option value="2">Postprandial</option>
+                                            <option value="3">Ambas</option>
                                         </select>
                                     </td>
                                     <td><input type="number" name="AD" min="0" max="1000" step="1" required></td>
@@ -1484,7 +1424,7 @@
                         </table>
                     </div>
 
-                    <div class="form-field insulinaPrandial-label" id="insulinaPrandialTabla2" style="display: none;">
+                    <div class="form-field insulinaPrandial-label" id="insulinaPrandialTabla2" >
                         <table class="styled-table">
                             <thead>
                                 <tr>
@@ -1505,8 +1445,8 @@
                                     <td><input type="date" id="consultationDate2" name="consultationDate" required></td>
                                     <td><select class="form-field">
                                             <option value="">Seleccione...</option>
-                                            <option value="adecuada">Adecuada</option>
-                                            <option value="inadecuada">Inadecuada</option>
+                                            <option value="1">Adecuada</option>
+                                            <option value="2">Inadecuada</option>
                                         </select></td>
                                     <td><select class="form-field">
                                             <option value="">Seleccione...</option>
@@ -1516,9 +1456,9 @@
                                     <td>
                                         <select class="select-option">
                                             <option value="">Seleccione...</option>
-                                            <option value="pre">Preprandial</option>
-                                            <option value="post">Postprandial</option>
-                                            <option value="post">Ambas</option>
+                                            <option value="1">Preprandial</option>
+                                            <option value="2">Postprandial</option>
+                                            <option value="3">Ambas</option>
                                         </select>
                                     </td>
                                     <td><input type="number" name="AD" min="0" max="1000" step="1" required><input
@@ -1559,9 +1499,128 @@
                         }
 
                     </script>
-
-                    //
                 </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Habitos de vida</legend>
+
+                <div class="form-field">
+                    <label for="actividadFisica">¿El paciente realiza actividad física?</label>
+                    <select id="actividadFisica" class="select-option" name="actividadFisica">
+                        <option value="">Seleccione...</option>
+                        <option value="yes">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div id="tablaActividadFisica">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Duración</th>
+                                <th>Frecuencia</th>
+                                <th>Intensidad</th>
+                                <th>Tipo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field"><input type="date" id="consultationDate" name="consultationDate"
+                                        required></td>
+                                <td>
+                                    <select id="horasActividadFisica" class="select-option" name="horasActividadFisica">
+                                        <option value="">Seleccione...</option>
+                                        <!-- Generar opciones de 0 a 24 horas -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="frecuenciaActividad" name="frecuenciaActividad" class="select-option">
+                                        <option value="">Seleccione...</option>
+                                        <option value="diario">1 vez por semana</option>
+                                        <option value="semanal">2 veces por semana</option>
+                                        <option value="mensual">3 veces por semana</option>
+                                        <option value="anual">4 veces por semana</option>
+                                        <option value="semanal">5 veces por semana</option>
+                                        <option value="mensual">6 veces por semana</option>
+                                        <option value="anual">7 veces por semana</option>
+                                        <option value="anual">1 vez quincenal</option>
+                                        <option value="anual">1 vez mensual</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="frecuenciaActividad" name="frecuenciaActividad" class="select-option">
+                                        <option value="">Seleccione...</option>
+                                        <option value="diario">Leve</option>
+                                        <option value="semanal">Moderada</option>
+                                        <option value="mensual">Intensa</option>
+                                    </select>
+                                </td>
+                                <td class="form-field">
+                                    <input type="text" id="tipoActividad" name="tipoActividad" required>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+                <h2>Nutrición</h2>
+                <div id="tablaAtividadfisica">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>No. Comidas al día</th>
+                                <th>Apetito</th>
+                                <th>Ansiedad</th>
+                                <th id="thCual" style="display: none;">Cual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="form-field">
+                                    <input type="date" id="consultationDate" name="consultationDate" required>
+                                </td>
+                                <td>
+                                    <select id="numComidas" class="select-option" name="numComidas">
+                                        <option value="">Seleccione...</option>
+                                        <script>
+                                            for (let i = 1; i <= 20; i++) {
+                                                document.write(`<option value="${i}">${i}</option>`);
+                                            }
+                                        </script>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="opciones">
+                                        <option value="">Seleccione una opción...</option>
+                                        <option value="platoCompleto">Plato completo</option>
+                                        <option value="medioPlato">Medio Plato</option>
+                                        <option value="cuartoPlato">1/4 del plato</option>
+                                    </select>
+                                </td>
+                                <td class="form-field">
+                                    <select id="ansiedad" name="ansiedad" class="select-option"
+                                        onchange="toggleAnsiedadObservacion()">
+                                        <option value="">Seleccione...</option>
+                                        <option value="si">Sí</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </td>
+                                <td class="form-field" id="ansiedadObservacionField" style="display: none;">
+                                    <input type="text" id="obseransi" name="obseransi" placeholder="Observación"
+                                        required>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                
+
             </fieldset>
 
             <p id="mensaje"></p>
